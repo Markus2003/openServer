@@ -79,7 +79,7 @@ sudo chown <username>:<username> -R /var/www/html
 # Changelog
 Here we are with the `Hello, GitHub!` version (formally `ALPHA-0.0.1`)<br>
 ## Features
-- Sidebar to switch quicly through Server Sections
+- Sidebar to switch quickly through Server Sections
 - `Applications` Section ready for use
 - App Installation and Uninstallation from the `Applications` Section
 ## Some Bugs
