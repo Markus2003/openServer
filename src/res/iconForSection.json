@@ -1,0 +1,17 @@
+{
+    "sectionName": [
+        "Applications",
+        "Films",
+        "Music",
+        "TV Series",
+        "Personal Vault"
+    ],
+    "sectionIcon": [
+        "applications.svg",
+        "movie.svg",
+        "music.svg",
+        "tv.svg",
+        "storage.svg"
+    ],
+    "fallback": "error.svg"
+}

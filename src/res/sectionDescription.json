@@ -1,0 +1,15 @@
+{
+    "sectionName": [
+        "Applications",
+        "Films",
+        "Personal Vault",
+        "TV Series"
+    ],
+    "sectionDescription": [
+        "Collection of Web-App installed on the Server",
+        "Collection of Film to download or watch directly on openServer",
+        "A Vault where you can store Private Datas",
+        "Collection of TV Series to download or watch directly on openServer"
+    ],
+    "fallback": "Unknown Description"
+}
