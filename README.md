@@ -43,7 +43,7 @@ cd /var/www/ && rm *
 ```
 - Download `openServer` and extract it:
 ```bash
-wget https://github.com/Markus2003/openServer/archive/refs/heads/main.zip && unzip main.zip && rm main.zip && mv openServer-main html
+wget https://github.com/Markus2003/openServer/archive/refs/tags/ALPHA.zip && unzip ALPHA.zip && rm main.zip && mv openServer-ALPHA html
 ```
 - Edit your `php.ini` to grant app upload (`php.ini` path may change depending on the system):
 ```bash
