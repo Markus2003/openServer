@@ -18,7 +18,7 @@
         <div class='bar2'></div>
         <div class='bar3'></div>
     </div>
-    <text id='webTitle'>openServer <code id='directory'><?php echo $_SERVER["REQUEST_URI"] ?></code></text>
+    <text id='webTitle'>openServer <code id='directory'><?php echo getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder ?></code></text>
     <?php printAccountPhoto(); ?><!--TODO: Dropdown Menu per l'Utente-->
 </header>
 <div id='headerGhost'></div>

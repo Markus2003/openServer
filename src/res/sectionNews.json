@@ -3,12 +3,14 @@
         "Applications",
         "Music",
         "Films",
-        "TV Series"
+        "TV Series",
+        "Personal Vault"
     ],
     "sectionNews": [
-        "Initial Release, VS Code Web App updated to 4.1.0",
-        "Initial Release",
-        "Initial Release",
-        "Initial Release"
+        "Section fully working, except for the Application Extraction functionality",
+        "Folder Creation, File Upload and Rename working",
+        "Folder Creation, File Upload and Rename working, Alpha version of the Player released",
+        "Folder Creation, File Upload and Rename working",
+        "Everything is working fine, Application will be available in future"
     ]
 }

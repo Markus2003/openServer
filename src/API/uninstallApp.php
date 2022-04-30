@@ -1,7 +1,7 @@
 <?php
     if ( isset( $_GET["appName"] ) ) {
-        $systemApp = ['Cockpit', 'Visual Studio Code', 'phpMyAdmin', 'Tiny File Manager', 'VNC Viewer', 'Server Shell'];
-        foreach ( $systemApp as $app )
+        $systemApp = json_decode( file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/systemApps.json' ), true );
+        foreach ( $systemApp["sysApps"] as $app )
             if ( $_GET["appName"] == $app ) {
                 echo "Error: Operation not permitted. System app uninstall not allowed.";
                 exit();

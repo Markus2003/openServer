@@ -53,7 +53,7 @@
                 ?>
             </div>
 
-            <button type='button' id='installButton' class='button primaryColor shadow'><img src='/src/icons/install.svg' />Install an App</button>
+            <button type='button' id='installButton' class='button sensibleActionButton primaryColor shadow'><img src='/src/icons/install.svg' />Install an App</button>
 
             <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/footer.html.php' ?>
         </div>

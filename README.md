@@ -29,9 +29,9 @@ Well, you are in the right place... but at the wrong time, in fact this is the `
 
 ## How do I install openServer on my machine?
 ##### For the moment I'm only supporting `Linux`, so if you have `Windows` you must wait (for `macOS` users: leave this Repo, I don't have enough money to buy Apple products)<br>
-- First of all you must run this command to install `apache2`, `PHP` (with the relative dependencies) and `mariadb-server` (it will be necessary in future for user management):
+- First of all you must run this command to install `apache2` and `PHP`:
 ```bash
-sudo apt-get install apache2 php php-files php-zip mariadb-server -y
+sudo apt-get install apache2 php -y
 ```
 - (OPTIONAL) I strongly reccomend to install also `Cockpit` to manage remotely your server:
 ```bash
@@ -43,7 +43,7 @@ cd /var/www/ && rm *
 ```
 - Download `openServer` and extract it:
 ```bash
-wget https://github.com/Markus2003/openServer/archive/refs/tags/ALPHA.zip && unzip ALPHA.zip && rm main.zip && mv openServer-ALPHA html
+wget https://github.com/Markus2003/openServer/archive/refs/heads/main.zip && unzip main.zip && rm main.zip && mv openServer-main html
 ```
 - Edit your `php.ini` to grant app upload (`php.ini` path may change depending on the system):
 ```bash
@@ -77,22 +77,19 @@ sudo chown <username>:<username> -R /var/www/html
 <br><br>
 
 # Changelog
-Here we are with the `Hello, GitHub!` version (formally `ALPHA-0.0.1`)<br>
+Here we are with the `Go Beta, Go!` version (formally `BETA-0.5.5`)<br>
 ## Features
 - Sidebar to switch quickly through Server Sections
-- `Applications` Section ready for use
-- App Installation and Uninstallation from the `Applications` Section
+- All Sections ready for use
+- `Material You` from Google
+- Beginning implementation of the Mobile Version
 ## Some Bugs
-- App extraction and download not ready yet
-- Other Sections are not ready yet
-- User management not implemented
-- `Personal Vault` not implemented
 - Some visual bugs
-- Mobile version not implemented
 <br><br>
 
 # Upcoming Features
 - App extraction and download from `Applications` Section
+- Players for the Sections and the `Personal Vault`
 - Improvement to the `CSS`
 - A Repo hosting some App for the Server
 - Many others...

@@ -1,11 +1,12 @@
 {
-
     "files": [
         "index.php"
     ],
     "folders": [
+        ".",
+        "..",
         "hidden",
-        "src"
+        "src",
+        "posters"
     ]
-
 }

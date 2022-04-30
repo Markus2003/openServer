@@ -13,13 +13,32 @@
 
         <div id='main'>
             <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/navbar.inc.php' ?>
-            <?php #include $_SERVER["DOCUMENT_ROOT"] . '/src/include/scanFolder.inc.php' ?>
             <div id='superContainer' class='primaryColor'>
                 <section class='primaryColor-Dark shadow'>
                     <span class='sectionTitle'><img src='/src/icons/home.svg' width='20px' height='20px' /><b>Server News</b></span>
                     <article>
-                        Initial Release of <code>openServer</code><br>
-                        Phase => <code>ALPHA</code>
+                        New Release of <code>openServer</code>: <code>Go Beta, GO!</code><br>
+                        Phase => <code>BETA</code><br>
+                        <ul>
+                            <li>
+                                The Theme for the Server is becoming <code>Material You</code>
+                            </li>
+                            <li>
+                                A Setup Process will guide you trought the steps to set the Database for the Server
+                            </li>
+                            <li>
+                                Personal Vault is now working
+                            </li>
+                            <li>
+                                Now you can delete a foldeder even if it isn't empty
+                            </li>
+                            <li>
+                                The Player for the Film Section is in ALPHA, soon will be available also for 'TV Series' and 'Music'
+                            </li>
+                            <li>
+                                You can now delete your openServer Account
+                            </li>
+                        </ul>
                     </article>
                 </section>
                 <div id='miniContainer'>

@@ -1,10 +1,8 @@
 <?php
     
     function randomGreetings () {
-
         $greetings = ["Hello", "Welcome back"];
         return $greetings[ rand( 0, count( $greetings ) - 1 ) ];
-
     }
 
     session_start();
@@ -16,13 +14,13 @@
     else
         echo "<p id='navBarGreetings'>Hello,<br>Guest!</p>";
 
-    echo "<a href='/'><img src='/src/icons/home.svg' />Home</a>";
+    echo "<a href='/'><div><img src='/src/icons/home.svg' />Home</div></a>";
     $rawFolder = scandir( $_SERVER["DOCUMENT_ROOT"] );
     foreach ( $rawFolder as $folder )
         if ( is_dir( $_SERVER["DOCUMENT_ROOT"] . '/' . $folder ) and checkBlacklistFolder( $folder ) )
             if ( findStringInArray( $jsonRes["sectionName"], $folder ) )
-                echo "<a href='/" . $folder . "'><img src='/src/icons/" . $jsonRes["sectionIcon"][ array_search( $folder, $jsonRes["sectionName"] ) ] . "' />". $folder . "</a>";
+                echo "<a href='/" . $folder . "'><div><img src='/src/icons/" . $jsonRes["sectionIcon"][ array_search( $folder, $jsonRes["sectionName"] ) ] . "' />". $folder . "</div></a>";
             else
-                echo "<a href='/" . $folder . "'><img src='/src/icons/" . $jsonRes["fallback"] . "' />". $folder . "</a>";
+                echo "<a href='/" . $folder . "'><div><img src='/src/icons/" . $jsonRes["fallback"] . "' />". $folder . "</div></a>";
 
 ?>

@@ -1,0 +1,6 @@
+{
+    "providerSite": "smtp.gmail.com",
+    "port": 587,
+    "serverEmail": "",
+    "emailPassword": ""
+}

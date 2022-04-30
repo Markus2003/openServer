@@ -1,0 +1,12 @@
+{
+    "sysApps": [
+        "Cockpit",
+        "Visual Studio Code",
+        "phpMyAdmin",
+        "Tiny File Manager",
+        "VNC Viewer",
+        "Server Shell",
+        "SmanettaStore",
+        "Markdown Editor"
+    ]
+}

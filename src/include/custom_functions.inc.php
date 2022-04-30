@@ -13,16 +13,20 @@
 
     function isReadableForServer ( $fileName ) {
 
+        $audioTypes = [ "mp3", "m4a" ];
         $imageTypes = [ "png", "jpg", "jpeg", "gif" ];
+        $videoTypes = [ "mp4", "avi" ];
         $bookTypes = [ "epub", "pdf" ];
         $textTypes = [ "txt", "html", "css", "scss", "js", "php", "json", "c", "cpp", "ino", "java", "py", "sh", "bat", "sql" ];
+        $archiveType = [ "zip", "tar", "rar", "7z" ];
+        $androidInstallerTypes = [ "apk", "apkm", "abb" ];
 
         $extension = explode( ".", $fileName )[ count( explode( ".", $fileName ) ) - 1 ];
 
-        if ( $extension == "mp3" ) 
+        if ( in_array( $extension, $audioTypes ) ) 
             return "Audio";
         
-        else if ( $extension == "mp4" )
+        else if ( in_array( $extension, $videoTypes ) )
             return "Video";
 
         else if ( in_array( $extension, $imageTypes ) )
@@ -34,29 +38,53 @@
         else if ( in_array( $extension, $textTypes ) )
             return "Text";
 
+        else if ( in_array( $extension, $archiveType ) )
+            return "Archive";
+
+        else if ( in_array( $extension, $androidInstallerTypes ) )
+            return "Android Installer";
+
         else
             return FALSE;
 
     }
 
+    function getFileExtension ( $fileName ) {
+        return explode( ".", $fileName )[ count( explode( ".", $fileName ) ) - 1 ];
+    }
+
     function checkBlacklistFolder ( $folderName ) {
 
-        $blacklist = [".", "..", "hidden", ".hiddenApps", "src", "posters"];
+        $blacklist = json_decode( file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/filesFoldersBlacklist.json' ), true );
         session_start();
         if ( !isset( $_SESSION["openServerUsername"] ) )
-            array_push( $blacklist, "Personal Vault" );
-        foreach ( $blacklist as $test )
+            array_push( $blacklist["folders"], "Personal Vault" );
+        foreach ( $blacklist["folders"] as $test )
             if ( $folderName == $test )
                 return FALSE;
-        
         return TRUE;
 
     }
 
     function checkBlacklistFile ( $fileName ) {
 
+        $blacklist = json_decode( file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/filesFoldersBlacklist.json' ), true );
+        foreach ( $blacklist["files"] as $test )
+            if ( $fileName == $test )
+                return FALSE;
         return TRUE;
 
+    }
+
+    function generateUserpath ( $length = 15 ) {
+        if ( $length > 15 )
+            $length = 15;
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen( $characters );
+        $randomString = '';
+        for ( $i = 0; $i < $length; $i++ )
+            $randomString .= $characters[ rand( 0, $charactersLength - 1 ) ];
+        return $randomString;
     }
 
     function getRelativeLink ( $directory ) {
@@ -110,6 +138,24 @@
 
     }
 
+    function printFilmPoster ( $filmName ) {
+
+        array_replace( $filmName, '.' . explode( '.', $filmName )[ count(explode( '.', $filmName )) - 1 ], '' );
+        return $filmName;
+
+    }
+
+    function getInServerAddress ( $rawAddress ) {
+
+        $result = '';
+        $explodedAddress = explode( '/', $rawAddress );
+        array_pop( $explodedAddress );
+        foreach ( $explodedAddress as $chunk )
+            $result .= $chunk . '/';
+        return $result;
+
+    }
+
     function formatSize ( $bytes ) {
 
         if ( $bytes >= 1073741824 ) {
@@ -126,6 +172,19 @@
             return '0 Bytes';
         }
         
+    }
+
+    function rrmdir($dir) {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); else unlink($dir."/".$object);
+                }
+            }
+            reset($objects);
+            rmdir($dir);
+        }
     }
 
 ?>
