@@ -1,0 +1,15 @@
+{
+    "sender": "mistermarc11@gmail.com",
+    "greetings": [
+        "Welcome!",
+        "Welcome on openServer!\nOn openServer you can:\n- Upload your own Applications\n- Watch Film and TV Series\n- Playing Music\n- Upload your own Private File in the Personal Vault which you will be able to access using the credentials of your openServer Account\n\nSee you soon!\n\nThe openServer Team"
+    ],
+    "goodbye": [
+        "Confirmation Email",
+        "Hi there,\nyou are receiving this email because you choose to delete you openServer Account...\nWe are sorry to se you go...\nMaybe one day you will come back...\n\nUntil then: Goodbye\n\nThe openServer Team"
+    ],
+    "userpathUpdated": [
+        "Userpath Updated",
+        "Hi there,\nyou are receiving this email because you have updated your Userpath on openServer.\nThe process is completed, so you have now improved your security and didn't lost your Private Files.\nIf you wish to retrieve your new Userpath you can login on openServer > go to the Account Manager > click on 'Show my Userpath'.\n\nSee you soon!\nThe openServer Team"
+    ]
+}

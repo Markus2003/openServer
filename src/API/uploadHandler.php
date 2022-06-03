@@ -24,7 +24,7 @@
                     </section>
                     <section id='1' class='max-width left' style='display: none'>
                         Please select the File to upload<br>
-                        <form id='uploadFile' method='post' enctype='multipart/form-data'>
+                        <form id='uploadFile' class='uploadForm' method='post' enctype='multipart/form-data'>
                             <input type='hidden' id='sourcePath' name='path' value='<?php echo $_GET["path"] ?>' />
                             <input type='file' name='file' id='file' class='button primaryColor-Dark shadow' required />
                             <input type='submit' id='submit' class='button primaryColor-Dark shadow' value='Upload' />

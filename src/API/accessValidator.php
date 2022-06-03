@@ -1,14 +1,4 @@
 <?php
-    function checkIfUserpathExist( $userpath ) {
-        include $_SERVER["DOCUMENT_ROOT"] . '/src/include/db_connect-Reader.inc.php';
-        $result = $database->query("SELECT userpath FROM " . $credentials["defaultDatabase"] . ".users WHERE userpath='" . $userpath . "';");
-        $database->close();
-        if ( $result->num_rows == 0 )
-            return FALSE;
-        else
-            return TRUE;
-    }
-
     session_start();
     include $_SERVER["DOCUMENT_ROOT"] . '/src/include/custom_functions.inc.php';
     if ( isset( $_POST["username"] ) and isset( $_POST["email"] ) and isset( $_POST["username"] ) and isset( $_POST["password"] ) and isset( $_POST["repeatedPassword"] ) ) {
@@ -23,8 +13,8 @@
             $result = $database->query("INSERT INTO " . $credentials["defaultDatabase"] . ".users (email, password, username, userpath, flags) VALUES (\"" . $database->real_escape_string( $_POST["email"] ) . "\", \"" . sha1( $database->real_escape_string( $_POST["password"] ) ) . "\", \"" . $database->real_escape_string( $_POST["username"] ) . "\", \"" . $userpath . "\", \"0\");");
             $database->close();
             mkdir( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $userpath, 0777 );
-            system('python3 ' . $_SERVER["DOCUMENT_ROOT"] . '/src/API/python/sendGreetings.py \'' . $_SERVER["DOCUMENT_ROOT"] . '\' \'' . $_POST["email"] . '\'');
-            echo "Success: user '" . $database->real_escape_string( $_POST["username"] ) . "' registered correctly";
+            system('python3 ' . $_SERVER["DOCUMENT_ROOT"] . '/src/API/python/sendEmail.py \'' . $_SERVER["DOCUMENT_ROOT"] . '\' \'' . $_POST["email"] . '\' \'greetings\'');
+            echo "Success: user '" . $_POST["username"] . "' registered correctly";
         } elseif ( $result->num_rows == 1 and !$database->connect_error ) {
             echo "Error: User already exist";
         } else {
