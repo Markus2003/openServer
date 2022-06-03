@@ -2,7 +2,7 @@
     function checkDatabaseCredentials ( $host=null, $username=null, $password=null, $defaultDB=null ) {
         if ( $host == null and $username == null and $password == null and $defaultDB == null ) {
             $credentials = json_decode(file_get_contents('src/configs/dbCredentials.json'), true);
-            if ( $credentials["host"] != null and $credentials["username"] != null and $credentials["password"] != null and $credentials["defaultDB"] != null ) {
+            if ( $credentials["host"] != null and $credentials["username"] != null and $credentials["defaultDB"] != null ) {
                 $db = new mysqli($credentials["host"], $credentials["username"], $credentials["password"], $credentials["defaultDB"]);
                 if ( $db->connect_errno )
                     return FALSE;

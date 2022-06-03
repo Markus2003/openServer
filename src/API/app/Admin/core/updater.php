@@ -172,8 +172,6 @@
                             case 0:
                             case 1:
                                 $('#updateIconStatus').attr('src', 'src/icons/updateCompleted.svg');
-                                //$('#checkUpdate').html('Download Update');
-                                //snackbarNotification('New Update Available!', 'updateReadyToDownload.svg');
                                 snackbarNotification('No Update Found! Great!', 'updateCompleted.svg');
                             break;
                         }
