@@ -86,6 +86,16 @@
             $randomString .= $characters[ rand( 0, $charactersLength - 1 ) ];
         return $randomString;
     }
+    
+    function checkIfUserpathExist( $userpath ) {
+        include $_SERVER["DOCUMENT_ROOT"] . '/src/include/db_connect-Reader.inc.php';
+        $result = $database->query("SELECT userpath FROM " . $credentials["defaultDatabase"] . ".users WHERE userpath='" . $userpath . "';");
+        $database->close();
+        if ( $result->num_rows == 0 )
+            return FALSE;
+        else
+            return TRUE;
+    }
 
     function getRelativeLink ( $directory ) {
 

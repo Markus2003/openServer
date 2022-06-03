@@ -3,74 +3,43 @@
     src: url('/src/res/OpenSans-Regular.ttf');
 }
 
-:root {
-    --primaryColor: #1976D2;
-    --primaryColor-Dark: #004BA0;
-    --hoverColor: #333333;
-    --m3-drawer-borderRadius: 0px 50px 50px 0px;
-    --m3-button-borderRadius: 100px;
-    --m3-button-innerDiv-padding-withIMG: 0px 24px 0px 16px;
-    --m3-button-innerDiv-padding-noIMG: 0px 24px 0px 24px;
-    --m3-button-height: 40px;
-    --m3-element-borderRadius-min: 25px;
-    --m3-fab-width: 56px;
-    --m3-fab-borderRadius: 16px;
-    --m3-fab-margin: 16px;
+* {
+    font-family: 'Google Sans';
 }
 
-.primaryColor {
-
-    background-color: var( --primaryColor );
-
-}
-
-.primaryColor-Dark {
-
-    background-color: var( --primaryColor-Dark );
-
+a {
+    text-decoration: none;
 }
 
 .shadow {
-
     box-shadow: 0px 0px 0px #000000;
     transition: ease 0.3s;
-
 }
 
 .shadow:hover {
-
     box-shadow: 0px 5px 8px #000000;
     /*box-shadow: 0px 0px 10px #000000;*/
-
 }
 
 ::-webkit-scrollbar {
-
     width: 10px;
-
 }
 
 ::-webkit-scrollbar-track {
-
-    background-color: #1976D2;
+    background-color: var( --primaryColor );
     border-radius: 12px;
-
 }
 
 ::-webkit-scrollbar-thumb {
-    
-    background: #004BA0;
+    background: var( --primaryColor-Dark );
     border-radius: 12px;
-
 }
 
 html {
-
     color: white;
     background-color: black;
     font-family: 'Google Sans';
     cursor: default;
-
 }
 
 .sideNavbar {
@@ -159,9 +128,7 @@ html {
 }
 
 #directory {
-
     font-size: 15px;
-
 }
 
 #superContainer {
@@ -193,12 +160,10 @@ html {
 }
 
 .sectionTitle > img {
-
     aspect-ratio: 1 / 1;
     width: 40px;
     height: auto;
     margin-right: 10px;
-
 }
 
 #miniContainer {
@@ -209,35 +174,32 @@ html {
     left: 20px;
     /*height: 100%;*/
     height: fit-content;
-    border-radius: 12px;
-    padding: 10px;
+    border-radius: var( --m3-button-borderRadius );
+    padding: var( --m3-element-padding );
 }
 
 #miniContainer > section {
     display: flex;
     justify-content: center;
     border-radius: var( --m3-element-borderRadius-min );
-    padding: 10px;
+    padding: var( --m3-element-padding );
     margin-bottom: 10px;
     flex-direction: column;
     align-items: center;
 }
 
 #navBarGreetings {
-
     padding: 8px 30px 8px 70px;
     text-decoration: none;
     font-size: 25px;
     color: #f1f1f1;
     display: block;
     transition: 0.3s;
-
 }
 
 #main {
     position: absolute;
     display: inline-block;
-    width: 100wh;
     top: 0px;
     right: 0px;
     left: 0px;
@@ -262,30 +224,23 @@ html {
 }
 
 #headerGhost {
-
     height: 70px;
-
 }
 
 #webTitle {
-
     position: relative;
     top: -5px;
     left: 15px;
     font-size: xx-large;
-
 }
 
 #accountPhoto {
-
     position: absolute;
-    right: 10px;
+    right: 5px;
     top: 0px;
-
 }
 
 #formTable {
-
     table-layout: fixed;
     margin-left: auto;
     margin-right: auto;
@@ -295,93 +250,25 @@ html {
     border-radius: 12px;
     padding: 0px 10px 10px 10px;
     border-width: 0px;
-
 }
 
-.tabButton {
-
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: transparent;
-    border-color: transparent;
-    border-width: 0px 0px 2px;
-    color: white;
-
-}
-
-.tabButton:hover {
-
-    border-color: #004BA0;
-
-}
-
-.tabButton.active {
-
-    border-color: #004BA0;
-
-}
 .accessForm {
-
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: fit-content;
+    /*width: fit-content;*/
+    width: calc( 100% - 35px );
     padding: 10px;
     border-radius: 12px;
-
 }
 
-.textInputs {
-    border-width: 0px 0px 2px;
-    border-color: transparent;
-    /*width: 80%;*/
-    width: 100%;
-    height: 25px;
-    background: #005CB8;
-    color: white;
-}
-
-.textInputs:focus, .textInputs:not( :placeholder-shown ) {
-    outline: none;
-    border-color: #004BA0;
-    border-width: 0px 0px 2px;
-}
-
-.textInputs::placeholder, .textInputs:placeholder-shown {
-    color: whitesmoke;
-    opacity: 0.8;
-}
-
-.button {
-    border: none;
-    border-radius: var( --m3-button-borderRadius );
-    height: var( --m3-button-height );
-    padding: var( --m3-button-innerDiv-padding-noIMG );
-    color: white;
-    transition: ease 0.5s;
-    width: fit-content;
+.revealPassword {
+    aspect-ratio: 1 / 1;
+    width: 24px;
+    height: auto;
+    float: right;
+    transform: translate(-10px, -35px);
     cursor: pointer;
-}
-
-.button.primaryColor:hover {
-    background: #004ba0 radial-gradient(circle, transparent 1%, #004ba0 1%) center/15000%;
-}
-
-.button.primaryColor-Dark:hover {
-    background: #002571 radial-gradient(circle, transparent 1%, #002571 1%) center/15000%;
-}
-
-.button.primaryColor:active {
-    background-color: #63a4ff;
-    background-size: 100%;
-    transition: background 0s;
-}
-
-.button.primaryColor-Dark:active {
-    background-color: #5076d2;
-    background-size: 100%;
-    transition: background 0s;
 }
 
 .button > img {
@@ -390,8 +277,28 @@ html {
     height: auto;
 }
 
-.sensibleActionButton  {
+.sectionTitle > a > button {
+    margin-right: 5px;
+}
 
+.uploadForm {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
+    row-gap: 5px;
+}
+
+.uploader {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-top: 5px;
+}
+
+.sensibleActionButton  {
     display: flex;
     vertical-align: middle;
     align-items: center;
@@ -399,17 +306,13 @@ html {
     margin-top: 20px;
     margin-right: auto;
     margin-left: auto;
-
 }
 
 .sensibleActionButton  > img {
-
     padding-right: 10px;
-
 }
 
 .settingSection {
-
     display: block;
     width: calc( 100% - 70px );
     background-color: rgb(88, 88, 88);
@@ -418,41 +321,57 @@ html {
     padding: 10px;
     margin-left: auto;
     margin-right: auto;
-
 }
 
 #setupContainer {
-
     border-radius: 12px;
     padding: 20px;
-
 }
 
 .max-width {
-
     width: 100%;
-
 }
 
 .right {
-
     float: right;
     margin-left: 5px;
-
 }
 
 .left {
-
     float: left;
     margin-right: 5px;
-
 }
 
 .center {
-
     margin-left: auto;
     margin-right: auto;
+}
 
+
+#playerSuperContainer {
+    width: 100%;
+    border-radius: var( --m3-element-borderRadius-min );
+    padding-bottom: 10px;
+}
+
+#videoTitle {
+    margin: 0;
+    padding-left: 10px;
+}
+
+#descriptionContainer {
+    padding: 10px;
+}
+
+#videoPlayer {
+    width: 55%;
+    min-width: 350px;
+    max-width: 650px;
+    border-radius: 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    aspect-ratio: 16 / 9;
+    outline: none;
 }
 
 footer {
@@ -465,38 +384,10 @@ footer {
 }
 
 footer code {
-
     font-size: 18px;
-
-}
-
-.fab {
-    display: inline-block;
-    position: fixed;
-    aspect-ratio: 1 / 1;
-    width: var( --m3-fab-width );
-    height: auto;
-    padding: 10px;
-    border: solid 5px;
-    border-color: black;
-    border-radius: var( --m3-fab-borderRadius );
-    background-color: var( --primaryColor );
-    align-items: center;
-    vertical-align: middle;
-    bottom: var( --m3-fab-margin );
-    right: var( --m3-fab-margin );
-    transition: ease 0.5s;
-    cursor: pointer;
-}
-
-.fab:hover {
-    background-color: var( --primaryColor-Dark );
 }
 
 .fab > img {
-    aspect-ratio: 1 / 1;
-    width: 100%;
-    height: auto;
     content: url('/src/icons/alert.svg');
 }
 
@@ -518,6 +409,10 @@ footer code {
 }
 
 @media screen and ( max-width: 710px ) {
+    #directory {
+        display: none;
+    }
+
     #miniContainer {
         grid-template-columns: 100%;
         column-gap: 0px;

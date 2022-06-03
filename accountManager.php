@@ -28,7 +28,7 @@
                             <td>E-Mail</td><td><?php echo $_SESSION["openServerEmail"] ?></td>
                         </tr>
                         <tr>
-                            <td>Userpath</td><td><button type='button' id='revealUserpath' class='button primaryColor shadow'>Show my Userpath</button></td>
+                            <td>Userpath</td><td><button type='button' id='revealUserpath' class='button primaryColor shadow' style='margin-bottom: 10px'>Show my Userpath</button><button type='button' id='regenerateUserpath' class='button primaryColor shadow'>Regenerate my Userpath</button></td>
                         </tr>
                         <tr>
                             <td>You are an Admin</td><td><b><?php if ( $_SESSION["openServerFlags"] ) echo "True"; else echo "False"; ?></b></td>
@@ -43,6 +43,15 @@
                         <button type='button' id='logout' class='button primaryColor shadow'>Logout</button>
                     </section>
                 </div>
+                <?php
+                    if ( $_SESSION["openServerFlags"] )
+                        echo "
+                            <section class='primaryColor-Dark shadow'>
+                                <a href='/src/API/app/Admin/'><button type='button' class='button primaryColor shadow'>Go To Administration Page</button></a>
+                            </section>
+                        ";
+                ?>
+                
             </div>
 
             <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/footer.html.php' ?>
@@ -52,13 +61,30 @@
 
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/script.html.php' ?>
     <script>
-        $('#revealUserpath').click(function () {
+        $('#revealUserpath').on('click', function () {
             if ( confirm('Do you really want to reveal your \'Userpath\'?\nThis string say where is your Personal Vault on the Server, keep it secret!') ) {
-                var password = prompt('Insert your password to confirm this action:');
+                var password = prompt('Insert your password to confirm this critical action:');
                 $.ajax({
-                    url: '/src/API/revealPath.php?email=<?php echo $_SESSION["openServerEmail"] ?>&password=' + password,
+                    url: '/src/API/getSessionVar.php?command=Userpath&password=' + password,
                     success: function (data) {
-                        console.log( data );
+                        //$(this).prop('disabled', true);
+                        //$(this).attr('disabled', 'disabled');
+                        alert( "Your Userpath in the Server is:\n" + data + "\nRemember to keep this String secret!\nYou will always be able to recover the Userpath in this page" );
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            }
+        });
+
+        $('#regenerateUserpath').click(function () {
+            if ( confirm('Are you really sure you want to re-generate your current Userpath?') ) {
+                var password = prompt('Insert your password to confirm this critical action:');
+                $.ajax({
+                    url: '/src/API/regenerateUserpath.php?password=' + password,
+                    success: function (data) {
+                        console.log(data);
                     },
                     cache: false,
                     contentType: false,
@@ -83,7 +109,7 @@
         $('#deleteAccount').click(function () {
             if ( confirm('Are you sure you want to delete your openServer Account?\nYour files stored in the Personal Vault will be lost forever!') )
                 if ( confirm('Really?\nThis operation will be irreversible!') ) {
-                    var password = prompt('Insert you password to confirm this critical action:');
+                    var password = prompt('Insert your password to confirm this critical action:');
                     $.ajax({
                         url: '/src/API/deleteAccount.php?password=' + password,
                         type: 'GET',

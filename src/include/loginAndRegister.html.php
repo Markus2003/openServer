@@ -12,8 +12,8 @@
             <div id='loginDiv'>
                 <form id='loginForm' class='accessForm primaryColor' action='/src/API/accessValidator.php' method='POST'>
                     <h3>Login</h3><br>
-                    E-Mail:<br><input type='email' class='textInputs' name='email' placeholder='mistermarc11@gmail.com' /><br><br>
-                    Password:<br><input type='password' class='textInputs' name='password' placeholder='volevi...' /><br><br>
+                    E-Mail:<br><input type='email' class='textInputs' name='email' placeholder='elonmusk@mars.com' /><br><br>
+                    Password:<br><input type='password' class='textInputs password' name='password' placeholder='XÆA-12' /><img src='/src/icons/visibilityOn.svg' class='revealPassword' /><br><br>
                     <input type='hidden' name='type' value='login' />
                     <input type='submit' id='loginButton' class='button shadow primaryColor-Dark' />
                 </form>
@@ -21,10 +21,10 @@
             <div id='registrationDiv'>
                 <form id='registrationForm' class='accessForm primaryColor' action='/src/API/accessValidator.php' method='POST' style='display: none'>
                     <h3>Registration</h3><br>
-                    Username:<br><input type='text' class='textInputs' name='username' placeholder='Mavcoloide' /><br><br>
-                    E-Mail:<br><input type='email' class='textInputs' name='email' placeholder='mistermarc11@gmail.com' /><br><br>
-                    Password:<br><input type='password' class='textInputs' name='password' placeholder='volevi...' /><br><br>
-                    Repeat Password:<br><input type='password' class='textInputs' name='repeatedPassword' placeholder='volevi...' /><br><br>
+                    Username:<br><input type='text' class='textInputs' name='username' placeholder='Elon Musk' /><br><br>
+                    E-Mail:<br><input type='email' class='textInputs' name='email' placeholder='elonmusk@mars.com' /><br><br>
+                    Password:<br><input type='password' class='textInputs password' name='password' placeholder='XÆA-12' /><img src='/src/icons/visibilityOn.svg' class='revealPassword' /><br><br>
+                    Repeat Password:<br><input type='password' class='textInputs password' name='repeatedPassword' placeholder='XÆA-12' /><img src='/src/icons/visibilityOn.svg' class='revealPassword' /><br><br>
                     <input type='hidden' name='type' value='registration' />
                     <input type='submit' id='registerButton' class='button shadow primaryColor-Dark' />
                 </form>
@@ -35,7 +35,7 @@
 
 <script>
     $('form#loginForm').submit(function (e) {
-        $('#loginButton').after('<p id=\'notice\'><img src=\'/src/icons/loadingMini.svg\' />Logging In...</p>');
+        $('#loginButton').after('<div class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Logging In...</div>');
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -45,7 +45,7 @@
             success: function (data) {
                 $('#notice').remove();
                 if ( data == 'Success: Log-In successfull' ) {
-                    alert( data + '\nYou will be now redirected' );
+                    //alert( data + '\nYou will be now redirected' );
                     window.location.href = '/';    
                 } else {
                     alert( data );
@@ -56,8 +56,9 @@
             processData: false
         });
     });
+    
     $('form#registrationForm').submit(function (e) {
-        $('#registerButton').after('<p id=\'notice\'><img src=\'/src/icons/loadingMini.svg\' />Registering...</p>');
+        $('#registerButton').after('<div class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Registering...</div>');
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({

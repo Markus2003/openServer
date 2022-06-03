@@ -4,37 +4,29 @@ var isSideBarOpen = false;
 //var prevScrollpos = window.pageYOffset;
 
 function openNavBar ( ctx ) {
-
     ctx.classList.toggle("change");
     document.getElementById("sideNavBar").style.width = "325px";
     document.getElementById("main").style.marginLeft = "275px";
     document.getElementById("header").style.left = "295px";
     document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-
 }
 
 function closeNavBar ( ctx ) {
-
     ctx.classList.toggle("change");
     document.getElementById("sideNavBar").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
     document.getElementById("header").style.left = "20px";
     document.body.style.backgroundColor = "white";
-
 }
 
 function sideBarToggler ( ctx ) {
-
     if ( isSideBarOpen ) {
         isSideBarOpen = false;
         closeNavBar( ctx );
-
     } else {
         isSideBarOpen = true;
         openNavBar( ctx );
-
     }
-
 }
 
 $('#login').click( function () {
@@ -73,7 +65,7 @@ function deleteFile ( path, fileName ) {
             url: '/src/API/deleteFile.php?path=' + path + '&fileName=' + fileName,
             type: 'GET',
             success: function (data) {
-                alert( data + '\nPage will now reload' );
+                //alert( data + '\nPage will now reload' );
                 window.location.reload();
             },
             cache: false,
@@ -94,7 +86,7 @@ $('#installButton').click(function () {
 });
 
 function uploadFile ( section, path ) {
-    if ( confirm( 'Do you want to upload a new File in the \'' + section + '\' Section?\nYou will be redirected to the dedicatd page' ) )
+    //if ( confirm( 'Do you want to upload a new File in the \'' + section + '\' Section?\nYou will be redirected to the dedicatd page' ) )
         window.location.href = '/src/API/uploadHandler.php?path=' + path;
 }
 
@@ -104,7 +96,7 @@ function createFolder ( path ) {
             url: '/src/API/createFolder.php?path=' + path + '&folderName=' + folderName,
             type: 'GET',
             success: function (data) {
-                alert( data + '\nPage will now reload' );
+                //alert( data + '\nPage will now reload' );
                 window.location.reload();
             },
             cache: false,
@@ -121,7 +113,7 @@ function deleteFolder ( path, folderName ) {
             url: '/src/API/deleteFolder.php?path=' + path + '&folderName=' + folderName,
             type: 'GET',
             success: function (data) {
-                alert( data + '\nPage will now reload' );
+                //alert( data + '\nPage will now reload' );
                 window.location.reload();
             },
             cache: false,
@@ -133,7 +125,7 @@ function deleteFolder ( path, folderName ) {
 }
 
 $('form#uploadPackage').submit(function (e) {
-    $('#uploadPackage').after('<img src=\'/src/icons/loadingMini.svg\' />Uploading and Installing...');
+    $('#uploadPackage').after('<div class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Uploading and Installing...</div>');
     e.preventDefault();
     var formData = new FormData(this);
     $.ajax({
@@ -141,7 +133,8 @@ $('form#uploadPackage').submit(function (e) {
         type: 'POST',
         data: formData,
         success: function (data) {
-            alert( data + '\nYou will be now redirected' );
+            if ( data.includes('Error') )
+                alert( data + '\nYou will be now redirected' );
             window.location.href = "/Applications/";
         },
         cache: false,
@@ -151,7 +144,7 @@ $('form#uploadPackage').submit(function (e) {
 });
 
 $('form#uploadFile').submit(function (e) {
-    $('#uploadFile').after('<img src=\'/src/icons/loadingMini.svg\' />Uploading File...')
+    $('#uploadFile').after('<div class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Uploading File...</div>')
     e.preventDefault();
     var formData = new FormData(this);
     $.ajax({
@@ -159,7 +152,8 @@ $('form#uploadFile').submit(function (e) {
         type: 'POST',
         data: formData,
         success: function (data) {
-            alert( data + '\nYou will be now redirected' );
+            if ( data.includes('Error') )
+                alert( data + '\nYou will be now redirected' );
             //window.location.href = $('#sourcePath').val();
             history.back();
         },
@@ -197,4 +191,39 @@ function renameFolder ( directory, oldChunkName ) {
             contentType: false,
             processData: false
         });
+}
+
+$('.revealPassword').click(function () {
+    switch ( $(this).attr('src') ) {
+        case '/src/icons/visibilityOn.svg':
+            $('.password').attr('type', 'text');
+            $('.revealPassword').attr('src', '/src/icons/visibilityOff.svg');
+        break;
+
+        case '/src/icons/visibilityOff.svg':
+            $('.password').attr('type', 'password');
+            $('.revealPassword').attr('src', '/src/icons/visibilityOn.svg');
+        break;
+    }
+});
+
+function removeExtensionFromFile ( rawName ) {
+    rawName = rawName.split('.');
+    rawName.pop();
+    if ( rawName.length > 1 ) {
+        var result = '';
+        for ( var i = 0; i != rawName.length; i++ )
+            if ( i == rawName.length - 1 )
+                result += rawName[i];
+            else
+                result += rawName [i] + '.';
+        return result;
+    } else
+        return rawName[0];
+}
+
+function getTVSeriesName ( rawName ) {
+    rawName = removeExtensionFromFile( rawName );
+    result = rawName.split(' - ');
+    return result[0];
 }

@@ -12,15 +12,14 @@
         </div>
 
         <div id='main'>
-            <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/navbar.inc.php' ?>
             <?php
                 if ( isset( $_GET['overrideFolder'] ) )
                     $overrideFolder = $_GET['overrideFolder'];
                 else
                     $overrideFolder = '';
-
-                include $_SERVER["DOCUMENT_ROOT"] . '/src/include/scandir.inc.php';
             ?>
+            <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/navbar.inc.php' ?>
+            <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/scandir.inc.php' ?>
 
             <div id='superContainer' class='primaryColor-Dark'>
                 <?php
@@ -61,12 +60,11 @@
                                     <section class='primaryColor shadow'>
                                         <span class='max-width left sectionTitle' style='font-size: 30px'><img src='/src/icons/movie.svg' style='width: 30px' /><b>" . $file . "</b></span>
                                         <article class='max-width'>
-                                            <form action='player.php' method='GET'>
+                                            <form action='/src/API/app/filmPlayer.php' method='GET'>
                                                 <input type='hidden' name='fileName' value='" . $file . "' />
                                                 <input type='hidden' name='path' value='/Films/" . $overrideFolder . $file . "' />
                                                 <button type='submit' class='button right shadow primaryColor-Dark'><img src='/src/icons/play.svg' /></button>
                                             </form>
-                                            <!--<a href='" . getInServerAddress( $_SERVER["REQUEST_URI"] ) . $overrideFolder . $file . "'><button type='button' class='button right shadow primaryColor-Dark'><img src='/src/icons/play.svg' /></button></a>-->
                                             <a href='" . getInServerAddress( $_SERVER["REQUEST_URI"] ) . $overrideFolder . $file . "' download><button type='button' class='button right shadow primaryColor-Dark'><img src='/src/icons/download.svg' /></button></a>
                                             <button type='button' class='button primaryColor-Dark right shadow' onclick='renameFile( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\", \"" . getFileExtension( $file ) . "\" )'><img src='/src/icons/edit.svg' /></button>
                                             <button type='button' class='button primaryColor-Dark right shadow' onclick='deleteFile( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/bin.svg' /></button>

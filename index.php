@@ -3,6 +3,13 @@
     
     <head>
         <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/head_content.html.php' ?>
+        <style>
+            @media screen and ( min-width: 711px ) {
+                #miniContainer > *:nth-child(2n-1):nth-last-of-type(1) {
+                    grid-column: span 2;
+                }
+            }
+        </style>
     </head>
 
     <body>
@@ -17,26 +24,23 @@
                 <section class='primaryColor-Dark shadow'>
                     <span class='sectionTitle'><img src='/src/icons/home.svg' width='20px' height='20px' /><b>Server News</b></span>
                     <article>
-                        New Release of <code>openServer</code>: <code>Go Beta, GO!</code><br>
+                        New Release of <code>openServer</code>: <code>Is that a... Player?</code><br>
                         Phase => <code>BETA</code><br>
                         <ul>
                             <li>
-                                The Theme for the Server is becoming <code>Material You</code>
+                                <code>Material You</code> as Server Theme
                             </li>
                             <li>
-                                A Setup Process will guide you trought the steps to set the Database for the Server
+                                Improvements to Video Player
                             </li>
                             <li>
-                                Personal Vault is now working
+                                Implemented a Userpath Regenerator
                             </li>
                             <li>
-                                Now you can delete a foldeder even if it isn't empty
+                                Implemented new Admin Application
                             </li>
                             <li>
-                                The Player for the Film Section is in ALPHA, soon will be available also for 'TV Series' and 'Music'
-                            </li>
-                            <li>
-                                You can now delete your openServer Account
+                                OTA Update implemented in the Admin Application
                             </li>
                         </ul>
                     </article>

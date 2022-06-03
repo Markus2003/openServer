@@ -26,11 +26,12 @@
                         | -> <code>index.html</code>/<code>index.php</code> to start the app<br>
                         | -> <code>info.txt</code> containg some info about the app (reccomended)<br>
                         | -> <code>icon.svg</code> to display the icon of the app from the list (reccomended)<br>
-                        : -> other file for the app
+                        : -> other file for the app<br>
+                        <button class='switch' role='switch' aria-checked='false'></button>
                     </section>
                     <section id='1' class='max-width left' style='display: none'>
                         Please select the package to upload and install<br>
-                        <form id='uploadPackage' method='post' enctype='multipart/form-data'>
+                        <form id='uploadPackage' class='uploadForm' method='post' enctype='multipart/form-data'>
                             <input type='file' name='file' id='file' class='button primaryColor-Dark shadow' accept='.zip' required />
                             <input type='submit' id='submit' class='button primaryColor-Dark shadow' value='Install' />
                         </form>

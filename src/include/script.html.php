@@ -1,4 +1,5 @@
 <script src='/src/script.js'></script>
+<script src='/src/m3.js'></script>
 <?php
     if ( !is_file( $_SERVER["DOCUMENT_ROOT"] . '/src/res/databaseCredentials.json' ) ) {
         fopen( $_SERVER["DOCUMENT_ROOT"] . '/src/res/databaseCredentials.json', "w" );

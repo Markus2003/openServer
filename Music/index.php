@@ -12,15 +12,14 @@
         </div>
 
         <div id='main'>
-            <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/navbar.inc.php' ?>
             <?php
                 if ( isset( $_GET['overrideFolder'] ) )
                     $overrideFolder = $_GET['overrideFolder'];
                 else
                     $overrideFolder = '';
-
-                include $_SERVER["DOCUMENT_ROOT"] . '/src/include/scandir.inc.php';
             ?>
+            <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/navbar.inc.php' ?>
+            <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/scandir.inc.php' ?>
 
             <div id='superContainer' class='primaryColor-Dark'>
                 <?php

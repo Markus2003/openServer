@@ -90,9 +90,22 @@
                                 }                                
                                 echo "' style='aspect-ratio: 1 / 1; width: 30px; height: auto;' />" . $file . "
                                 </span>
-                                <article class='max-width'>
-                                    <a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file , "'><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/launch.svg' /></button></a>
-                                    <a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file , "' download><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/download.svg' /></button></a>
+                                <article class='max-width'>";
+                                    switch ( isReadableForServer( $file ) ) {
+                                        case "Video":
+                                            echo "
+                                                <form action='/src/API/app/videoPlayer.php' method='GET'>
+                                                    <input type='hidden' name='fileName' value='" . $file . "' />
+                                                    <input type='hidden' name='path' value='/Personal Vault/" . $overrideFolder . $file . "' />
+                                                    <button type='submit' class='button right shadow primaryColor-Dark'><img src='/src/icons/play.svg' /></button>
+                                                </form>
+                                            ";
+                                        break;
+
+                                        default:
+                                            echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file , "'><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/launch.svg' /></button></a>";
+                                    }
+                                    echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file , "' download><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/download.svg' /></button></a>
                                     <button type='button' class='button primaryColor-Dark right shadow' onclick='rename( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/edit.svg' /></button>
                                     <button type='button' class='button primaryColor-Dark right shadow' onclick='deleteFile( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/bin.svg' /></button>
                                 </article>
@@ -123,6 +136,16 @@
                     contentType: false,
                     processData: false
                 });
+        }
+
+        $('.mv').click(function () {
+            var response = prompt("Where do you want to move '" + $(this).val() + "'?\nLeave blank to abort");
+            if ( response != '' )
+                mv( $(this).attr('originalPath'), $(this).val(), response );
+        });
+
+        function mv ( originalPath, fileName, newPath ) {
+            //TODO: Ajax code to mv.php page
         }
     </script>
 
