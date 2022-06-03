@@ -95,7 +95,7 @@
         var status = $('#updateIconStatus').attr('src');
         $('#updateIconStatus').attr('src', '/src/icons/loading.svg');
         $.ajax({
-            url: 'core/API/downloadUpdate.php?newVer=' + cloudVersion + '.zip',
+            url: 'core/API/downloadUpdate.php?newVer=' + cloudVersion,
             type: 'GET',
             success: function (data) {
                 $.ajax({
@@ -198,7 +198,7 @@
     function downloadUpdate () {
         $('#updateIconStatus').attr('src', '/src/icons/loading.svg');
         $.ajax({
-            url: 'core/API/downloadUpdate.php?newVer=' + cloudVersion + '.zip',
+            url: 'core/API/downloadUpdate.php?newVer=' + cloudVersion,
             type: 'GET',
             success: function (data) {
                 snackbarNotification('Update Download Complete', 'downloadCompleted.svg');
