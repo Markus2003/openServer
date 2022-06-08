@@ -1,6 +1,6 @@
 # openServer ![](https://img.shields.io/github/languages/code-size/Markus2003/openServer?style=for-the-badge) ![](https://img.shields.io/github/license/Markus2003/openserver?style=for-the-badge)
 Do you want a Website for your Server to host your own Web Apps, Film, TV Series, Music and Personal File?<br>
-Well, you are in the right place... but at the wrong time, in fact this is the `Pre-Release` version that you can test!
+Well, you are in the right place!
 <br><br>
 
 # Content
@@ -21,7 +21,7 @@ Well, you are in the right place... but at the wrong time, in fact this is the `
 ## openServer development support
 | OS | 64-bit | 32-bit | ARM |
 |----|--------|--------|-----|
-| Windows |  ✗  |  ✗  |  ✗  |
+| Windows |  ?  |  ?  |  ?  |
 | Linux   |  ✓  |  ?   |  ✓  |
 | macOS   |  ✗  |  ✗  |  ✗  |
 ##### Note that this is a `Pre-Release` version, so support is very limited!
@@ -39,11 +39,11 @@ sudo apt-get install cockpit -Y
 ```
 - Make your way to the Website folder and delete the `html` folder (it's useless):
 ```bash
-cd /var/www/ && rm *
+cd /var/www/html/ && rm ./*
 ```
 - Download `openServer` and extract it:
 ```bash
-wget https://github.com/Markus2003/openServer/archive/refs/heads/main.zip && unzip main.zip && rm main.zip && mv openServer-main html
+wget https://github.com/Markus2003/openServer/releases/download/0.5.6/0.5.6.zip && unzip 0.5.6.zip && rm 0.5.6.zip
 ```
 - Edit your `php.ini` to grant app upload (`php.ini` path may change depending on the system):
 ```bash
@@ -74,24 +74,25 @@ sudo chown <username>:<username> -R /var/www/html
 
 - DONE!
 ##### If you can't install app on the server try to execute again the last commands
+##### If some command don't work try to carefully add `sudo`
 <br><br>
 
 # Changelog
-Here we are with the `Go Beta, Go!` version (formally `BETA-0.5.5`)<br>
+Here we are with the `Is that a... Player?` version (formally `BETA-0.5.6`)<br>
 ## Features
-- Sidebar to switch quickly through Server Sections
-- All Sections ready for use
-- `Material You` from Google
-- Beginning implementation of the Mobile Version
+- `Material You` as Server Theme
+- Improvements to the Video Player
+- Userpath can now be regenerated
+- Implemented a new Admin Application for the Server Administrator
+- Beginning implementation of OTA Update in the new Admin Application
 ## Some Bugs
 - Some visual bugs
 <br><br>
 
 # Upcoming Features
 - App extraction and download from `Applications` Section
-- Players for the Sections and the `Personal Vault`
-- Improvement to the `CSS`
 - A Repo hosting some App for the Server
+- Server Settings (such as Cache Manager, Excusion Manager, Restore Options, ecc...)
 - Many others...
 <br><br>
 
