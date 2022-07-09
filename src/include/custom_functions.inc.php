@@ -12,7 +12,6 @@
     }
 
     function isReadableForServer ( $fileName ) {
-
         $audioTypes = [ "mp3", "m4a" ];
         $imageTypes = [ "png", "jpg", "jpeg", "gif" ];
         $videoTypes = [ "mp4", "avi" ];
@@ -46,7 +45,6 @@
 
         else
             return FALSE;
-
     }
 
     function getFileExtension ( $fileName ) {
@@ -54,7 +52,6 @@
     }
 
     function checkBlacklistFolder ( $folderName ) {
-
         $blacklist = json_decode( file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/filesFoldersBlacklist.json' ), true );
         session_start();
         if ( !isset( $_SESSION["openServerUsername"] ) )
@@ -63,17 +60,14 @@
             if ( $folderName == $test )
                 return FALSE;
         return TRUE;
-
     }
 
     function checkBlacklistFile ( $fileName ) {
-
         $blacklist = json_decode( file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/filesFoldersBlacklist.json' ), true );
         foreach ( $blacklist["files"] as $test )
             if ( $fileName == $test )
                 return FALSE;
         return TRUE;
-
     }
 
     function generateUserpath ( $length = 15 ) {
@@ -98,7 +92,6 @@
     }
 
     function getRelativeLink ( $directory ) {
-
         $explodedDirectory = explode( "/", $directory );
         $finalFolder = "";
         for ( $i = 1; $i != count( $explodedDirectory ) - 1; $i++ )
@@ -106,68 +99,57 @@
                 $finalFolder += $explodedDirectory[ $i ] . "/";
 
         return $finalFolder;
-
     }
 
     function getScannableDir () {
-
         $dir = "";
-
         if ( is_file( $_SERVER["DOCUMENT_ROOT"] . $_SERVER["REQUEST_URI"] ) ) {
-
             $explodedRequest = explode( '/', $_SERVER["REQUEST_URI"] );
             for ( $i = 0; $i != count( $explodedRequest ) - 2; $i++ )
                 $dir += $explodedRequest[ $i ] . "/";
-
             if ( $dir == "" )
                 $dir = "/";
-
         } else
             $dir = $_SERVER["REQUEST_URI"];
-
         return $_SERVER["DOCUMENT_ROOT"] . $dir;
-
     }
 
     function findStringInArray ( $array, $string ) {
-
         for ( $i = 0; $i != count( $array ); $i++ )
             if ( $array[ $i ] == $string )
                 return TRUE;
-
         return FALSE;
-
     }
 
     function printAppIconName ( $appName ) {
-
         if ( is_file( $_SERVER["DOCUMENT_ROOT"] . '/Applications/' . $appName . '/icon.svg' ) )
             return $appName . '/icon.svg';
         else
             return '/src/icons/applications.svg';
+    }
 
+    function printPrivateAppIconName ( $appName ) {
+        if ( is_file( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $_SESSION["openServerUserpath"] . '/.privateApps/' . $appName . '/icon.svg' ) )
+            return $_SESSION["openServerUserpath"] . '/.privateApps/' . $appName . '/icon.svg';
+        else
+            return '/src/icons/applications.svg';
     }
 
     function printFilmPoster ( $filmName ) {
-
         array_replace( $filmName, '.' . explode( '.', $filmName )[ count(explode( '.', $filmName )) - 1 ], '' );
         return $filmName;
-
     }
 
     function getInServerAddress ( $rawAddress ) {
-
         $result = '';
         $explodedAddress = explode( '/', $rawAddress );
         array_pop( $explodedAddress );
         foreach ( $explodedAddress as $chunk )
             $result .= $chunk . '/';
         return $result;
-
     }
 
     function formatSize ( $bytes ) {
-
         if ( $bytes >= 1073741824 ) {
             return number_format($bytes / 1073741824, 2) . ' GB';
         } elseif ( $bytes >= 1048576 ) {
@@ -181,7 +163,6 @@
         } else {
             return '0 Bytes';
         }
-        
     }
 
     function rrmdir($dir) {

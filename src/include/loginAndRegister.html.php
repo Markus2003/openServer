@@ -15,7 +15,7 @@
                     E-Mail:<br><input type='email' class='textInputs' name='email' placeholder='elonmusk@mars.com' /><br><br>
                     Password:<br><input type='password' class='textInputs password' name='password' placeholder='XÆA-12' /><img src='/src/icons/visibilityOn.svg' class='revealPassword' /><br><br>
                     <input type='hidden' name='type' value='login' />
-                    <input type='submit' id='loginButton' class='button shadow primaryColor-Dark' />
+                    <input type='submit' id='loginButton' class='button shadow primaryColor-Dark' value='Log-In' />
                 </form>
             </div>
             <div id='registrationDiv'>
@@ -26,7 +26,7 @@
                     Password:<br><input type='password' class='textInputs password' name='password' placeholder='XÆA-12' /><img src='/src/icons/visibilityOn.svg' class='revealPassword' /><br><br>
                     Repeat Password:<br><input type='password' class='textInputs password' name='repeatedPassword' placeholder='XÆA-12' /><img src='/src/icons/visibilityOn.svg' class='revealPassword' /><br><br>
                     <input type='hidden' name='type' value='registration' />
-                    <input type='submit' id='registerButton' class='button shadow primaryColor-Dark' />
+                    <input type='submit' id='registerButton' class='button shadow primaryColor-Dark' value='Register' />
                 </form>
             </div>
         </td>
@@ -35,7 +35,7 @@
 
 <script>
     $('form#loginForm').submit(function (e) {
-        $('#loginButton').after('<div class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Logging In...</div>');
+        $('#loginButton').after('<div id=\'loginStatus\' class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Logging In...</div>');
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -45,10 +45,10 @@
             success: function (data) {
                 $('#notice').remove();
                 if ( data == 'Success: Log-In successfull' ) {
-                    //alert( data + '\nYou will be now redirected' );
                     window.location.href = '/';    
                 } else {
                     alert( data );
+                    $('#loginStatus').remove();
                 }
             },
             cache: false,
@@ -58,7 +58,7 @@
     });
     
     $('form#registrationForm').submit(function (e) {
-        $('#registerButton').after('<div class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Registering...</div>');
+        $('#registerButton').after('<div id=\'loginStatus\' class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Registering...</div>');
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
@@ -69,6 +69,10 @@
                 $('#notice').remove();
                 alert( data + '\nThe page will now reload' );
                 location.reload();
+            },
+            error: function (data) {
+                alert( data );
+                $('#loginStatus').remove();
             },
             cache: false,
             contentType: false,

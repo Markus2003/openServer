@@ -31,8 +31,8 @@
                         </form>
                     </section>
                     <section class='max-width'>
-                        <button type='button' id='continue' class='button primaryColor-Dark right' style='width: 100px; display: block'>Continue</button>
-                        <button type='button' id='back' class='button primaryColor-Dark right' style='width: 100px; display: none'>Back</button>
+                        <button type='button' id='continue' class='button primaryColor-Dark right shadow' style='width: 100px; display: block'>Continue</button>
+                        <button type='button' id='back' class='button primaryColor-Dark right shadow' style='width: 100px; display: none'>Back</button>
                     </section>
                 </section>
             </div>

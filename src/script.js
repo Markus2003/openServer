@@ -222,6 +222,20 @@ function removeExtensionFromFile ( rawName ) {
         return rawName[0];
 }
 
+function downloadApp ( appName ) {
+    //$.ajax({
+    //    url: '/src/API/downloadApp.php?appName=' + appName,
+    //    type: 'GET',
+    //    success: function (data) {
+    //        console.log( data );
+    //    },
+    //    cache: false,
+    //    contentType: false,
+    //    processData: false
+    //});
+    window.location.href = '/src/API/downloadApp.php?appName=' + appName;
+}
+
 function getTVSeriesName ( rawName ) {
     rawName = removeExtensionFromFile( rawName );
     result = rawName.split(' - ');

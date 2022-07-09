@@ -1,10 +1,5 @@
-@font-face {
-    font-family: 'Google Sans';
-    src: url('/src/res/OpenSans-Regular.ttf');
-}
-
 * {
-    font-family: 'Google Sans';
+    font-family: 'Server Font';
 }
 
 a {
@@ -18,27 +13,21 @@ a {
 
 .shadow:hover {
     box-shadow: 0px 5px 8px #000000;
-    /*box-shadow: 0px 0px 10px #000000;*/
 }
 
 ::-webkit-scrollbar {
     width: 10px;
 }
 
-::-webkit-scrollbar-track {
-    background-color: var( --primaryColor );
-    border-radius: 12px;
-}
-
 ::-webkit-scrollbar-thumb {
-    background: var( --primaryColor-Dark );
+    background: var( --primaryColor );
     border-radius: 12px;
 }
 
 html {
     color: white;
     background-color: black;
-    font-family: 'Google Sans';
+    font-family: 'Server Font';
     cursor: default;
 }
 
@@ -164,6 +153,22 @@ html {
     width: 40px;
     height: auto;
     margin-right: 10px;
+}
+
+.stringCanCopy {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.copyImg {
+    opacity: 0;
+    transition: var( --m3-element-transition );
+}
+
+.stringCanCopy:hover > .copyImg {
+    opacity: 1;
 }
 
 #miniContainer {
@@ -372,6 +377,8 @@ html {
     margin-bottom: 10px;
     aspect-ratio: 16 / 9;
     outline: none;
+    border: solid 2px var( --hoverColor );
+    /*background-color: var( --primaryColor-Dark );*/
 }
 
 footer {

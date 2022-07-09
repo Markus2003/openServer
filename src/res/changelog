@@ -1,0 +1,39 @@
+<ul>
+    <li>
+        New Sections for the Admin App (<code>Font Customizer</code>, <code>Exclusion Tuner</code>, <code>Cache Manager</code>, <code>Restore Server Options</code>)<br>
+        Working Sections: <code>Font Customizer</code>, <code>Cache Manager</code> and <code>Server Updater</code>
+    </li>
+    <li>
+        Patched <code>Cache Manager</code>, now the Cache Wiper will delete only Vaults not linked to an Account
+    </li>
+    <li>
+        Switched from OpenSans to Roboto Flex as default Server Font
+    </li>
+    <li>
+        Updater style improved
+    </li>
+    <li>
+        You can now Flash your own Custom Update
+    </li>
+    <li>
+        Fixed String copy in <code>Database Settings</code> Section
+    </li>
+    <li>
+        Privacy for Personal Vault Improved
+    </li>
+    <li>
+        FAB button style fixed
+    </li>
+    <li>
+        Setup page fixed and improved
+    </li>
+    <li>
+        New script for Database generation (usable also for Database regeneration)
+    </li>
+    <li>
+        Player updated
+    </li>
+    <li>
+        Beginning implementation of new functionality in the <code>Personal Vault</code>
+    </li>
+</ul>

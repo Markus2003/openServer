@@ -59,7 +59,7 @@ This is an unofficial project
     --m3-chip-color: white;
 
     /*Variables for the normal FAB*/
-    --m3-fab-width: 56px;
+    --m3-fab-width: 26px;
     --m3-fab-borderRadius: 16px;
     --m3-fab-margin: 16px;
     --m3-fab-innerIMG-size: 24px;
@@ -226,7 +226,9 @@ This is an unofficial project
 
 /*Rules for Normal FAB*/
 .fab {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     aspect-ratio: 1 / 1;
     width: var( --m3-fab-width );
@@ -236,11 +238,9 @@ This is an unofficial project
     border-color: black;
     border-radius: var( --m3-fab-borderRadius );
     background-color: var( --primaryColor );
-    align-items: center;
     vertical-align: middle;
     bottom: var( --m3-fab-margin );
     right: var( --m3-fab-margin );
-    /*transition: ease 0.5s;*/
     transition: var( --m3-element-transition );
     cursor: pointer;
 }
