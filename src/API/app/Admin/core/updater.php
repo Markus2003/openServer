@@ -7,10 +7,15 @@
         align-items: stretch;
         flex-direction: column;
         row-gap: 10px;
+        max-width: 600px;
     }
-
-    .versionInfoContainer > p {
-        margin: 0px;
+    
+    .versionInfoContainer > div {
+        display: flex;
+        flex-direction: column;
+        background-color: var( --grey-Dark );
+        padding: var( --m3-inputText-padding );
+        border-radius: var( --m3-inputText-borderRadius );
     }
 
     #updateIconStatus {
@@ -32,19 +37,44 @@
         justify-content: space-around;
         align-items: center;
     }
+
+    #uploadUpdate {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 10px;
+    }
 </style>
 <div style='display: flex;justify-content: space-around;align-items: stretch;flex-direction: row;'>
     <div class='versionInfoContainer'>
-        <p>Current openServer Version: <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/version' ) ?></p>
-        <p>Codename: <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionName' ) ?></p>
+        <div>
+            <p><b>Current openServer Version:</b> <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/version' ) ?></p>
+            <p><b>Codename:</b> <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionName' ) ?></p>
+        </div>
+        <div id='newUpdateChangelog' style='display: none'>
+            <b><p id='title'>Loading...</p></b>
+            <p id='content'>Loading...</p>
+        </div>
+        <div id='currentChangelog'>
+            <b><p>Changelog for the Actual Version (<?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/version' ) ?>):</p></b>
+            <p id='content'><?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/changelog' ) ?></p>
+        </div>
     </div>
     <div class='visualVersionInfo'>
         <img src='src/icons/updateError.svg' id='updateIconStatus' />
         <button type='button' id='checkUpdate' class='button primaryColor'>Check Update Availability</button>
+        <div id='customUpdateContainer'>
+            <button type='button' id='flashCustomUpdate' class='button primaryColor'>Flash a Custom Update</button>
+            <form id='uploadUpdate' method='POST' enctype='multipart/form-data' style='display: none'>
+                <input type='file' name='file' id='file' class='button primaryColor' accept='.zip' required />
+                <input type="hidden" id="sourcePath" name="path" value="/">
+                <input type='submit' id='submit' class='button primaryColor' value='Flash Update' />
+            </form>
+        </div>
         <div class='iconButtonContainer'>
-            <button type='button' id='clearCache' class='button iconStyle primaryColor'><img src='/src/icons/bin.svg' /></button>
-            <a href='https://github.com/Markus2003/openServer' target='_blank'><button type='button' class='button iconStyle primaryColor'><img src='/src/icons/github.svg' /></button></a>
-            <button type='button' id='downloadUpdateAndSave' class='button iconStyle primaryColor'><img src='/src/icons/install.svg' /></button>
+            <button type='button' id='clearCache' class='button iconStyle primaryColor' title='Clear Updater Cache'><img src='src/icons/remove.svg' /></button>
+            <a href='https://github.com/Markus2003/openServer' target='_blank'><button type='button' class='button iconStyle primaryColor' title='Visit the Project Page on GitHub'><img src='src/icons/github.svg' /></button></a>
+            <button type='button' id='downloadUpdateAndSave' class='button iconStyle primaryColor' title='Save the latest Update in your Personal Vault'><img src='src/icons/export.svg' /></button>
         </div>
     </div>
 </div>
@@ -98,6 +128,7 @@
             url: 'core/API/downloadUpdate.php?newVer=' + cloudVersion,
             type: 'GET',
             success: function (data) {
+                console.log(data);
                 $.ajax({
                     url: 'core/API/saveUpdate.php',
                     type: 'GET',
@@ -164,9 +195,25 @@
                         localVersion = data;
                         switch ( compare( localVersion, cloudVersion ) ) {
                             case -1:
-                                $('#updateIconStatus').attr('src', 'src/icons/updateReadyToDownload.svg');
                                 $('#checkUpdate').html('Download Update');
                                 snackbarNotification('New Update Available!', 'updateReadyToDownload.svg');
+                                $('#newUpdateChangelog > b > #title').html('Changelog for the New Update (' + cloudVersion + '):');
+                                $('#newUpdateChangelog').show();
+                                $.ajax({
+                                    url: 'https://raw.githubusercontent.com/Markus2003/openServer/main/src/res/changelog',
+                                    type: 'GET',
+                                    success: function (data) {
+                                        $('#updateIconStatus').attr('src', 'src/icons/updateReadyToDownload.svg');
+                                        $('#newUpdateChangelog > #content').html( data );
+                                    },
+                                    error: function () {
+                                        $('#updateIconStatus').attr('src', 'src/icons/updateReadyToDownload.svg');
+                                        $('#newUpdateChangelog > #content').html('Error: Impossible to retrieve Changelog');
+                                    },
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false
+                                });
                             break;
 
                             case 0:
@@ -202,6 +249,7 @@
             type: 'GET',
             success: function (data) {
                 snackbarNotification('Update Download Complete', 'downloadCompleted.svg');
+                console.log(data);
                 $('#checkUpdate').html('Install Update');
                 if ( confirm('Do you want to install the update now?') )
                     installUpdate();
@@ -232,4 +280,34 @@
             processData: false
         });
     }
+
+    $('#flashCustomUpdate').click(function () {
+        $(this).hide();
+        $('#uploadUpdate').show();
+        snackbarNotification('Remember to call your custom update \'update.zip\'', 'info.svg');
+    });
+
+    $('form#uploadUpdate').submit(function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+            url: '/src/API/uploadFile.php',
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                if ( data == 'Success: File Uploaded' ) {
+                    snackbarNotification('Update Upload Complete, beginning installation', 'downloadCompleted.svg');
+                    installUpdate();
+                } else {
+                    snackbarNotification('Error while uploading the Update', 'downloadError.svg');
+                }
+            },
+            error: function () {
+                snackbarNotification('There was an error when trying connecting to the API<br>Try again in a few moments', 'hexError.svg');
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
 </script>

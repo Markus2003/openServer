@@ -13,3 +13,4 @@
                 echo printDone();
     }
 ?>
+<script src='core/API/dbFunctions.js'></script>

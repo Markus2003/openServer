@@ -8,6 +8,7 @@
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <meta name='description' content='A simple Admin in development' />
         <link rel='stylesheet' href='src/style.css' />
+        <link rel='stylesheet' href='/src/customFont.css?rnd=<?php echo $_SERVER['REQUEST_TIME'] ?>' />
         <script src='src/jquery.min.js'></script>
         <?php include 'src/include/customFunctions.inc.php' ?>
     </head>
@@ -16,15 +17,13 @@
             <img src='src/icons/Admin.svg' width='92px' height='auto' alt='Admin Icon' style='cursor: pointer' onclick='location.reload();' /><div><h1>Admin</h1><h6>by Marco Ricci</h6></div>
         </div>
         <div id='bodySuperContainer'>
-            <div id='menuList' style='width: 440px'>
+            <div id='menuList'>
                 <?php
                     if ( checkDatabaseCredentials() )
                         echo "
                             <a pageRef='accountManagement.php' class='menuAction'><div><img src='src/icons/accountManagement.svg' alt='User Management' /><span>User Management</span></div></a>
                             <a pageRef='tablesManagement.php' class='menuAction'><div><img src='src/icons/fileIcon.svg' alt='Tables Management' /><span>Tables Manager</span></div></a>
                             <a pageRef='dbDevMode.php' class='menuAction'><div><img src='src/icons/developerMode.svg' alt='Database Settings' /><span>Database Settings</span></div></a>
-                            <hr>
-                            <a pageRef='updater.php' class='menuAction'><div><img src='src/icons/updaterIcon.svg' alt='Update Server' /><span>Server Updater</span></div></a>
                             <hr>
                         ";
                     else
@@ -34,6 +33,12 @@
                             </script>
                         ";
                 ?>
+                <a pageRef='fontCustomization.php' class='menuAction'><div><img src='src/icons/font.svg' alt='Font Customizer' /><span>Font Customizer</span></div></a>
+                <a pageRef='exclusionTuner.php' class='menuAction'><div><img src='src/icons/exlusionTuner.svg' alt='Exclusion Tuner' /><span>Exclusion Tuner</span></div></a>
+                <a pageRef='cacheManager.php' class='menuAction'><div><img src='src/icons/cache.svg' alt='Update Server' /><span>Cache Manager</span></div></a>
+                <a pageRef='restoreOption.php' class='menuAction'><div><img src='src/icons/restoreOption.svg' alt='Restore Server Option' /><span>Restore Server Option</span></div></a>
+                <a pageRef='updater.php' class='menuAction'><div><img src='src/icons/updaterIcon.svg' alt='Update Server' /><span>Server Updater</span></div></a>
+                <hr>
                 <a pageRef='settings.php' class='menuAction active'><div><img src='src/icons/settingIcon.svg' /><span>Settings</span></div></a>
                 <a href='/' class='menuAction'><div><img src='src/icons/home.svg' /><span>Go to Server Root</span></div></a>
                 <a onclick='history.back()' class='menuAction'><div><img src='src/icons/return.svg' /><span>Go Back</span></div></a>

@@ -81,6 +81,49 @@
         ";
     }
 
+    function folderSize ( $dir ) {
+        $size = 0;
+        foreach (glob(rtrim($dir, '/').'/*', GLOB_NOSORT) as $each)
+            $size += is_file($each) ? filesize($each) : folderSize($each);
+        return $size;
+    }
+    
+    function formatSize ( $bytes ) {
+        if ( $bytes >= 1073741824 ) {
+            return number_format($bytes / 1073741824, 2) . ' GB';
+        } elseif ( $bytes >= 1048576 ) {
+            return number_format($bytes / 1048576, 2) . ' MB';
+        } elseif ( $bytes >= 1024 ) {
+            return number_format($bytes / 1024, 2) . ' KB';
+        } elseif ( $bytes > 1 ) {
+            return $bytes . ' Bytes';
+        } elseif ( $bytes == 1 ) {
+            return $bytes . ' Byte';
+        } else {
+            return '0 Bytes';
+        }
+    }
+
+    function vaultIsLinked ( $vaultPath ) {
+        include '../src/include/dbConnect.inc.php';
+        $result = $db->query("SELECT * FROM " . $credentials["defaultDB"] . ".users WHERE userpath='" . $vaultPath . "';");
+        $db->close();
+        return $result;
+    }
+
+    function getSpaceOfNotLinkedPersonalVault () {
+        $rawFolder = scandir( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' );
+        $folders = [];
+        foreach ( $rawFolder as $chunk )
+            if ( is_dir( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $chunk ) and $chunk != '.' and $chunk != '..' )
+                array_push( $folders, $chunk );
+        $result = 0;
+        foreach ( $folders as $folder )
+            if ( vaultIsLinked( $folder )->num_rows == 0 )
+                $result += folderSize( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $folder );
+        return formatSize( $result );
+    }
+
     function findStringInArray ( $array, $string ) {
         for ( $i = 0; $i != count( $array ); $i++ ) if ( $array[ $i ] == $string ) return TRUE;
         return FALSE;

@@ -13,10 +13,16 @@
     .button {
         margin: 10px 10px 10px 0px;
     }
+
+    #queryField {
+        resize: none;
+        height: auto;
+    }
 </style>
 <?php include '../src/include/customFunctions.inc.php' ?>
 <form id='submitQuery' method='POST' enctype='multipart/form-data'>
-    <input type='text' id='queryField' class='input' name='query'>
+    <textarea id='queryField' class='input' name='query' rows='10'></textarea>
+    <!--<input type='text' id='queryField' class='input' name='query'>-->
     <div>
         <button type='submit' class='button'><img src='src/icons/runIcon.svg' alt='Run Query Icon' />Run Query</button>
         <button type='button' id='clearQueryField' class='button'><img src='src/icons/resetQuery.svg' alt='Clear Query Field' />Clear Query Field</button>

@@ -12,23 +12,29 @@
     --button-borderRadius: 4px;
     --button-innerDiv-padding-withIMG: 0px 24px 0px 16px;
     --button-innerDiv-padding-noIMG: 0px 24px 0px 24px;
+
+    --m3-inputText-borderWidth: 0px 0px 2px 0px;
+    --m3-inputText-width: calc( 100% - 32px );
+    --m3-inputText-height: 30px;
+    --m3-inputText-padding: 8px 16px 8px 16px;
+    --m3-inputText-borderRadius: 7px;
     
     --m3-iconButton-innerIMG-size: 24px;
     --m3-iconButton-size: 40px;
     --m3-iconButton-margin: 8px 8px 8px 8px;
 
     --m3-standard-borderRadius: 100px;
+    --m3-element-transition: ease 0.5s;
 }
 
-@font-face {
-    font-family: 'Google Sans';
-    src: url('fonts/OpenSans.ttf');
+* {
+    font-family: 'Server Font';
 }
 
 html, body {
     margin: 0px;
     height: 100%;
-    font-family: 'Google Sans';
+    font-family: 'Server Font';
     overflow: hidden;
     background-color: var( --grey-Dark );
 }
@@ -37,14 +43,30 @@ a {
     text-decoration: none;
 }
 
-.input {
+/*.input {
     background-color: var( --inputGrey );
     border: var( --inputGrey ) solid 3px;
     border-radius: 50px;
     color: white;
     outline: none;
     padding: 5px;
+}*/
+
+.input {
+    border: solid;
+    border-width: var( --m3-inputText-borderWidth );
+    border-color: var( --inputGrey );
+    width: var( --m3-inputText-width );
+    height: var( --m3-inputText-height );
+    padding: var( --m3-inputText-padding );
+    border-radius: var( --m3-inputText-borderRadius );
+    background: var( --inputGrey );
+    color: white;
+    outline: none;
+    transition: var( --m3-element-transition );
 }
+.input:focus, .input:not( :placeholder-shown ) { border-color: var( --hoverColor ); }
+.input::placeholder, .input:placeholder-shown { color: whitesmoke; opacity: 0.8; }
 
 .button {
     display: flex;
@@ -178,6 +200,14 @@ input[type="checkbox"] {
     width: 100vw;
 }
 
+#menuList {
+    width: 440px !important;
+    height: calc( 100% - 162px );
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 55px;
+}
+
 #menuList > a {
     cursor: pointer;
     width: 100%;
@@ -203,6 +233,10 @@ input[type="checkbox"] {
     justify-content: flex-start;
     width: 100%;
     height: 100%;
+}
+
+#menuList > a > div > span {
+    user-select: none;
 }
 
 #menuList > a:hover {
@@ -351,6 +385,7 @@ th.checkBox {
     display: flex;
     flex-direction: row;
     align-items: center;
+    user-select: none;
 }
 
 #snackbar > span > img {
@@ -358,4 +393,8 @@ th.checkBox {
     width: 24px;
     height: auto;
     margin-right: 10px;
+}
+
+::-webkit-scrollbar, ::-webkit-scrollbar-track {
+    display: none;
 }
