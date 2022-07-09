@@ -6,6 +6,7 @@ Well, you are in the right place!
 # Content
 - [What is openServer](#what-is-openserver)
 - [openServer development support](#openserver-development-support)
+- [How do I update openServer?](#how-do-i-update-openserver)
 - [How do I install openServer on my machine?](#how-do-i-install-openserver-on-my-machine)
 - [Changelog](#changelog)
 - [Upcoming Features](#upcoming-features)
@@ -24,7 +25,15 @@ Well, you are in the right place!
 | Windows |  ?  |  ?  |  ?  |
 | Linux   |  ✓  |  ?   |  ✓  |
 | macOS   |  ✗  |  ✗  |  ✗  |
-##### Note that this is a `Pre-Release` version, so support is very limited!
+<br><br>
+
+## How do I update openServer?
+If you have installed version `BETA-0.5.6` or newer, you can easily update to the latest version by following the instructions below:
+- Log-In as Administrator on openServer
+- Go to the `Account Manager` page and click the `Go To Administration Page` button
+- Now click on `Server Updater` Section
+- Click `Check Update Availability` button and follow the instructions
+- Done, you are now running the latest version of openServer!
 <br><br>
 
 ## How do I install openServer on my machine?
@@ -43,7 +52,7 @@ cd /var/www/html/ && rm ./*
 ```
 - Download `openServer` and extract it:
 ```bash
-wget https://github.com/Markus2003/openServer/releases/download/0.5.6/0.5.6.zip && unzip 0.5.6.zip && rm 0.5.6.zip
+wget https://github.com/Markus2003/openServer/releases/download/0.5.7/0.5.7.zip && unzip 0.5.7.zip && rm 0.5.7.zip
 ```
 - Edit your `php.ini` to grant app upload (`php.ini` path may change depending on the system):
 ```bash
@@ -78,13 +87,19 @@ sudo chown <username>:<username> -R /var/www/html
 <br><br>
 
 # Changelog
-Here we are with the `Is that a... Player?` version (formally `BETA-0.5.6`)<br>
+Here we are with the `Exams are gone, now I can code` version (formally `BETA-0.5.7`)<br>
 ## Features
-- `Material You` as Server Theme
-- Improvements to the Video Player
-- Userpath can now be regenerated
-- Implemented a new Admin Application for the Server Administrator
-- Beginning implementation of OTA Update in the new Admin Application
+- New Sections for the Admin App (`Font Customizer`, `Exclusion Tuner`, `Cache Manager`, `Restore Server Options`)<br>(Working Sections: `Font Customizer`,`Cache Manager`, `Server Updater`)
+- Patched `Cache Manager`, now the `Cache Wiper` will delete only Vaults not linked to an Account
+- Switched from `OpenSans` to `Roboto Flex` as default `Server Font`
+- `Updater` style improved
+- You can now `Flash` your own `Custom Update`
+- Fixed String copy in `Database Settings` Section
+- Privacy for `Personal Vault` improved
+- `FAB` button style fixed
+- New script for `Database Generation` (usable also for `Database Regeneration`)
+- `Player` updated
+- Beginning implementation of new functionatility  in the `Personal Vault`
 ## Some Bugs
 - Some visual bugs
 <br><br>
@@ -92,7 +107,7 @@ Here we are with the `Is that a... Player?` version (formally `BETA-0.5.6`)<br>
 # Upcoming Features
 - App extraction and download from `Applications` Section
 - A Repo hosting some App for the Server
-- Server Settings (such as Cache Manager, Excusion Manager, Restore Options, ecc...)
+- Enable all Sections in the Admin Application
 - Many others...
 <br><br>
 

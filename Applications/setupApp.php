@@ -27,7 +27,7 @@
                         | -> <code>info.txt</code> containg some info about the app (reccomended)<br>
                         | -> <code>icon.svg</code> to display the icon of the app from the list (reccomended)<br>
                         : -> other file for the app<br>
-                        <button class='switch' role='switch' aria-checked='false'></button>
+                        <!--<button class='switch' role='switch' aria-checked='false'></button>-->
                     </section>
                     <section id='1' class='max-width left' style='display: none'>
                         Please select the package to upload and install<br>

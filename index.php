@@ -24,25 +24,11 @@
                 <section class='primaryColor-Dark shadow'>
                     <span class='sectionTitle'><img src='/src/icons/home.svg' width='20px' height='20px' /><b>Server News</b></span>
                     <article>
-                        New Release of <code>openServer</code>: <code>Is that a... Player?</code><br>
-                        Phase => <code>BETA</code><br>
-                        <ul>
-                            <li>
-                                <code>Material You</code> as Server Theme
-                            </li>
-                            <li>
-                                Improvements to Video Player
-                            </li>
-                            <li>
-                                Implemented a Userpath Regenerator
-                            </li>
-                            <li>
-                                Implemented new Admin Application
-                            </li>
-                            <li>
-                                OTA Update implemented in the Admin Application
-                            </li>
-                        </ul>
+                        New Release of <code>openServer</code>: <code><?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionName' ) ?></code><br>
+                        Phase => <code><?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionStatus' ) ?></code><br>
+                        <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/changelog' ) ?>
+                    </article>
+                    <article id='newUpdateAvailable'>
                     </article>
                 </section>
                 <div id='miniContainer'>
@@ -96,5 +82,61 @@
     </body>
 
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/script.html.php' ?>
+    <script>
+        
+        var cloudVersion = '';
+        var localVersion = '';
+
+        checkUpdateAvailability();
+
+        function compare(a, b) {
+            if (a === b) return 0;
+            var a_components = a.split(".");
+            var b_components = b.split(".");
+            var len = Math.min(a_components.length, b_components.length);
+            for (var i = 0; i < len; i++) {
+                if (parseInt(a_components[i]) > parseInt(b_components[i])) return 1;
+                if (parseInt(a_components[i]) < parseInt(b_components[i])) return -1;
+            }
+            if (a_components.length > b_components.length) return 1;
+            if (a_components.length < b_components.length) return -1;
+            return 0;
+        }
+
+        function checkUpdateAvailability () {
+            $.ajax({
+                url: 'https://raw.githubusercontent.com/Markus2003/openServer/main/src/configs/version',
+                type: 'GET',
+                success: function (data) {
+                    cloudVersion = data;
+                    $.ajax({
+                        url: '/src/configs/version',
+                        type: 'GET',
+                        success: function (data) {
+                            localVersion = data;
+                            switch ( compare( localVersion, cloudVersion ) ) {
+                                case -1:
+                                    $('#newUpdateAvailable').html('Hello There! It seems that Markus2003 has released a new version of openServer, ask you server Admin to install it!')
+                                break;
+                            }
+                        },
+                        error: function () {
+
+                        },
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    });
+                },
+                error: function () {
+
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        }
+
+    </script>
 
 </html>

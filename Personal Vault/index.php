@@ -12,9 +12,63 @@
         </div>
 
         <div id='main'>
-            <?php $overrideFolder = $_SESSION["openServerUserpath"] . '/' . $_POST["overrideFolder"]; include $_SERVER["DOCUMENT_ROOT"] . '/src/include/navbar.inc.php' ?>
+            <?php $overrideFolder = $_POST["overrideFolder"]; include $_SERVER["DOCUMENT_ROOT"] . '/src/include/navbar.inc.php'; $overrideFolder = $_SESSION["openServerUserpath"] . '/' . $_POST["overrideFolder"]; ?>
             <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/scandir.inc.php' ?>
 
+                <?php
+                    if ( !isset( $_POST["overrideFolder"] ) ) {
+                        echo "
+                        <div id='superContainer' class='primaryColor-Dark'>
+                            <section class='primaryColor shadow'>
+                                <span class='sectionTitle'><img src='/src/icons/applications.svg' width='20px' height='20px' /><b>Private Apps</b></span>
+                            </section>
+                        ";
+                        if ( !is_dir( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $_SESSION["openServerUserpath"] . '/.privateApps/' ) )
+                            mkdir( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $_SESSION["openServerUserpath"] . '/.privateApps/', 0777 );
+                        $rawFolder = scandir( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $_SESSION["openServerUserpath"] . '/.privateApps/' );
+                        $folders = [];
+                        foreach ( $rawFolder as $chunk )
+                            if ( is_dir( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $_SESSION["openServerUserpath"] . '/.privateApps/' . $chunk ) and $chunk != '.' and $chunk != '..' )
+                                array_push( $folders, $chunk );
+                        if ( count( $folders ) > 0 )
+                            foreach ( $folders as $folder ) {
+                                echo "
+                                    <section class='primaryColor shadow'>
+                                        <span class='max-width left sectionTitle' style='font-size: 30px'><img src='" . printPrivateAppIconName( $folder ) . "' style='width: 30px' /><b>" . $folder . "</b></span>";
+                                        
+                                        if ( is_file( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $_SESSION["openServerUserpath"] . '/.privateApps/' . $folder . '/info.txt' ) )
+                                            echo "
+                                                <article class='max-width left'>
+                                                    " . file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $_SESSION["openServerUserpath"] . '/.privateApps/' . $folder . '/info.txt' ) . "
+                                                </article>
+                                            ";
+                                        else
+                                            echo "
+                                                <article class='max-width left'>
+                                                    No description found
+                                                </article>
+                                            ";
+                                        
+                                        echo "<article class='max-width'>
+                                            <a href='" . $_SESSION["openServerUserpath"] . "/.privateApps/" . $folder . "/' target='_blank' class='right'><button type='button' class='button primaryColor-Dark shadow'><img src='/src/icons/launch.svg' /></button></a>
+                                            <button type='button' class='button primaryColor-Dark right shadow' onclick='downloadPrivateApp(\"" . $folder . "\")'><img src='/src/icons/archive.svg' /></button>
+                                            <button type='button' class='button uninstallPrivateApp primaryColor-Dark right shadow' appName='" . $folder . "'><img src='/src/icons/bin.svg' /></button>
+                                        </article>
+                                    </section>
+                                ";
+                            }
+                        else
+                            echo "
+                                <section class='primaryColor shadow'>
+                                    <span class='max-width left sectionTitle' style='font-size: 30px'><img src='/src/icons/error.svg' style='width: 30px' /><b>No Apps found</b></span>
+                                </section>
+                            ";
+                        echo "
+                            </div>
+                            <br>
+                        ";
+                    }
+                ?>
             <div id='superContainer' class='primaryColor-Dark'>
                 <section class='primaryColor shadow'>
                     <span class='sectionTitle'><img src='/src/icons/folder.svg' width='20px' height='20px' /><b>Folders</b></span>
@@ -34,7 +88,7 @@
                                 </span>
                                 <article class='max-width'>
                                     <form action='" . $_SERVER["PHP_SELF"] . "' method='POST'>
-                                        <input type='hidden' name='overrideFolder' value='" . $POST["overrideFolder"] . $folder . "/' />
+                                        <input type='hidden' name='overrideFolder' value='" . $_POST["overrideFolder"] . $folder . "/' />
                                         <button type='submit' class='button changeFolder primaryColor-Dark right shadow'><img src='/src/icons/forward_arrow.svg' /></button>
                                     </form>
                                     <button type='button' class='button primaryColor-Dark right shadow' onclick='rename( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $folder . "\" )'><img src='/src/icons/edit.svg' /></button>
@@ -103,10 +157,15 @@
                                         break;
 
                                         default:
-                                            echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file , "'><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/launch.svg' /></button></a>";
+                                            if ( explode( ".", $file )[ count( explode( ".", $file ) ) - 1 ] == 'zip' and !isset( $_POST["overrideFolder"] ) ) {
+                                                echo "<button type='button' class='button privateInstall primaryColor-Dark right shadow' appName='" . $file . "'><img src='/src/icons/install.svg' /></button>";
+                                            } else
+                                                echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file , "'><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/launch.svg' /></button></a>";
                                     }
                                     echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file , "' download><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/download.svg' /></button></a>
                                     <button type='button' class='button primaryColor-Dark right shadow' onclick='rename( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/edit.svg' /></button>
+                                    <button type='button' class='button primaryColor-Dark right shadow' onclick='copy( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/copy.svg' /></button>
+                                    <button type='button' class='button primaryColor-Dark right shadow' onclick='mv( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/cut.svg' /></button>
                                     <button type='button' class='button primaryColor-Dark right shadow' onclick='deleteFile( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/bin.svg' /></button>
                                 </article>
                             </section>
@@ -138,14 +197,52 @@
                 });
         }
 
-        $('.mv').click(function () {
-            var response = prompt("Where do you want to move '" + $(this).val() + "'?\nLeave blank to abort");
+        function mv ( originalPath, fileName ) {
+            var response = prompt("Where do you want to move '" + fileName + "'?\nLeave blank to abort");
             if ( response != '' )
-                mv( $(this).attr('originalPath'), $(this).val(), response );
+                $.ajax({
+                    url: '/src/API/mv.php?fileName=' + fileName,
+                    type: 'GET',
+                    success: function (data) {
+                        alert( data );
+                        location.reload();
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+        }
+
+        $('.privateInstall').click(function () {
+            $.ajax({
+                url: '/src/API/installPrivateApp.php?appName=' + $(this).attr('appName'),
+                type: 'GET',
+                success: function (data) {
+                    alert( data );
+                    location.reload();
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
         });
 
-        function mv ( originalPath, fileName, newPath ) {
-            //TODO: Ajax code to mv.php page
+        $('.uninstallPrivateApp').click(function () {
+            $.ajax({
+                url: '/src/API/uninstallPrivateApp.php?appName=' + $(this).attr('appName'),
+                type: 'GET',
+                success: function (data) {
+                    alert( data );
+                    location.reload();
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
+        function downloadPrivateApp ( appName ) {
+            window.location.href = '/src/API/downloadApp.php?appName=' + appName;
         }
     </script>
 
