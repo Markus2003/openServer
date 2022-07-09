@@ -99,7 +99,7 @@ Here we are with the `Exams are gone, now I can code` version (formally `BETA-0.
 - `FAB` button style fixed
 - New script for `Database Generation` (usable also for `Database Regeneration`)
 - `Player` updated
-- Beginning implementation of new functionatility  in the `Personal Vault`
+- Beginning implementation of new functionality in the `Personal Vault`
 ## Some Bugs
 - Some visual bugs
 <br><br>
