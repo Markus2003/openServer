@@ -135,6 +135,10 @@
                                         echo 'zip.svg';
                                     break;
 
+                                    case 'Install Disk':
+                                        echo 'installMedia.svg';
+                                    break;
+
                                     case 'Android Installer':
                                         echo 'adb.svg';
                                     break;
@@ -160,9 +164,9 @@
                                             if ( explode( ".", $file )[ count( explode( ".", $file ) ) - 1 ] == 'zip' and !isset( $_POST["overrideFolder"] ) ) {
                                                 echo "<button type='button' class='button privateInstall primaryColor-Dark right shadow' appName='" . $file . "'><img src='/src/icons/install.svg' /></button>";
                                             } else
-                                                echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file , "'><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/launch.svg' /></button></a>";
+                                                echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file . "'><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/launch.svg' /></button></a>";
                                     }
-                                    echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file , "' download><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/download.svg' /></button></a>
+                                    echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file . "' download><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/download.svg' /></button></a>
                                     <button type='button' class='button primaryColor-Dark right shadow' onclick='rename( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/edit.svg' /></button>
                                     <button type='button' class='button primaryColor-Dark right shadow' onclick='copy( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/copy.svg' /></button>
                                     <button type='button' class='button primaryColor-Dark right shadow' onclick='mv( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/cut.svg' /></button>

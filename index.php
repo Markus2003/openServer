@@ -3,6 +3,7 @@
     
     <head>
         <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/head_content.html.php' ?>
+        <script src='/src/marked.min.js'></script>
         <style>
             @media screen and ( min-width: 711px ) {
                 #miniContainer > *:nth-child(2n-1):nth-last-of-type(1) {
@@ -26,7 +27,9 @@
                     <article>
                         New Release of <code>openServer</code>: <code><?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionName' ) ?></code><br>
                         Phase => <code><?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionStatus' ) ?></code><br>
-                        <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/changelog' ) ?>
+                        <div id='changelog'>
+                            <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/changelog' ) ?>
+                        </div>
                     </article>
                     <article id='newUpdateAvailable'>
                     </article>
@@ -82,8 +85,11 @@
     </body>
 
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/script.html.php' ?>
+    <script src='/src/marked.min.js'></script>
     <script>
         
+        $('#changelog').html( marked.parse( $('#changelog').html().replaceAll('\\n', '\n') ) );
+
         var cloudVersion = '';
         var localVersion = '';
 

@@ -25,6 +25,7 @@ Well, you are in the right place!
 | Windows |  ?  |  ?  |  ?  |
 | Linux   |  ✓  |  ?   |  ✓  |
 | macOS   |  ✗  |  ✗  |  ✗  |
+
 <br><br>
 
 ## How do I update openServer?
@@ -52,7 +53,7 @@ cd /var/www/html/ && rm ./*
 ```
 - Download `openServer` and extract it:
 ```bash
-wget https://github.com/Markus2003/openServer/releases/download/0.5.7/0.5.7.zip && unzip 0.5.7.zip && rm 0.5.7.zip
+wget https://github.com/Markus2003/openServer/releases/download/0.5.8/0.5.8.zip && unzip 0.5.8.zip && rm 0.5.8.zip
 ```
 - Edit your `php.ini` to grant app upload (`php.ini` path may change depending on the system):
 ```bash
@@ -87,19 +88,15 @@ sudo chown <username>:<username> -R /var/www/html
 <br><br>
 
 # Changelog
-Here we are with the `Exams are gone, now I can code` version (formally `BETA-0.5.7`)<br>
+Here we are with the `Utility there, Utility over there...` version (formally `BETA-0.5.8`)<br>
 ## Features
-- New Sections for the Admin App (`Font Customizer`, `Exclusion Tuner`, `Cache Manager`, `Restore Server Options`)<br>(Working Sections: `Font Customizer`,`Cache Manager`, `Server Updater`)
-- Patched `Cache Manager`, now the `Cache Wiper` will delete only Vaults not linked to an Account
-- Switched from `OpenSans` to `Roboto Flex` as default `Server Font`
-- `Updater` style improved
-- You can now `Flash` your own `Custom Update`
-- Fixed String copy in `Database Settings` Section
-- Privacy for `Personal Vault` improved
-- `FAB` button style fixed
-- New script for `Database Generation` (usable also for `Database Regeneration`)
-- `Player` updated
-- Beginning implementation of new functionality in the `Personal Vault`
+This upgrade also upgrade Changelog Viewer, so the info about the new update can be barely visible
+- Fixed <code>Personal Vault</code> Vulnerability
+- Improved File Type Recognition in <code>Personal Vault</code>
+- Prototype of a the <code>Music Player</code>
+- Prototype of the <code>Server File Finder</code>
+- Now you can upload multiple files
+
 ## Some Bugs
 - Some visual bugs
 <br><br>

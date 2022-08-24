@@ -15,7 +15,7 @@
             <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/navbar.inc.php' ?>
             <div id='superContainer'>
                 <section id='setupContainer' class='primaryColor center'>
-                    <span class='max-width left sectionTitle' style='font-size: 30px'><img src='/src/icons/install.svg' style='width: 30px; vertical-align: middle; margin-bottom: 10px;' />Welcome to the setup process</span>
+                    <span class='max-width left sectionTitle' style='font-size: 30px; margin-bottom: 10px;'><img src='/src/icons/install.svg' style='width: 30px; vertical-align: middle;' />Welcome to the setup process</span>
                     <section id='0' class='max-width left' style='display: block'>
                         Welcome to the setup process!<br>
                         Here you can install new Web App on this server.<br><br>
