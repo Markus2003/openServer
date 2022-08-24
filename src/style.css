@@ -116,6 +116,16 @@ html {
     transform: rotate(45deg) translate(-8px, -8px) ;
 }
 
+#changelog > ul > li {
+    margin-bottom: 5px;
+}
+
+#changelog > ul > li > code {
+    background-color: var( --primaryColor );
+    padding: 2px;
+    border-radius: 5px;
+}
+
 #directory {
     font-size: 15px;
 }
@@ -239,6 +249,15 @@ html {
     font-size: xx-large;
 }
 
+#searchButton {
+    position: absolute;
+    width: 48px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    top: 0px;
+    right: 58px;
+}
+
 #accountPhoto {
     position: absolute;
     right: 5px;
@@ -274,6 +293,32 @@ html {
     float: right;
     transform: translate(-10px, -35px);
     cursor: pointer;
+}
+
+#searchForm {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    background-color: var( --primaryColor );
+    padding: var(--m3-element-padding);
+    border-radius: var(--m3-element-borderRadius-min);
+    margin-bottom: 20px;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    background-color: var( --primaryColor-Dark );
+    border-radius: var( --m3-element-borderRadius-min );
+}
+
+fieldset > div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .button > img {
@@ -359,9 +404,8 @@ html {
     padding-bottom: 10px;
 }
 
-#videoTitle {
-    margin: 0;
-    padding-left: 10px;
+#videoTitle, #musicTitle {
+    margin: 15px;
 }
 
 #descriptionContainer {
@@ -379,6 +423,117 @@ html {
     outline: none;
     border: solid 2px var( --hoverColor );
     /*background-color: var( --primaryColor-Dark );*/
+}
+
+#musicPlayer {
+    display: none;
+}
+
+#playerTime {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 240px;
+}
+
+#playerAndPlaylist {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#musicPlayerContainer {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+#musicPlayerContainer > #musicImg {
+    aspect-ratio: 1 / 1;
+    width: 240px;
+    height: auto;
+    border-radius: var( --m3-element-borderRadius-min );
+}
+
+#playerProgressBarContainer {
+    display: flex;
+    align-items: center;
+    width: 240px;
+    height: 7px;
+    background-color: var( --primaryColor-Dark );
+    border-radius: var( --m3-element-borderRadius-min );
+    transition: var( --m3-element-transition );
+}
+
+#playerProgressBarContainer:hover {
+    height: 10px;
+}
+
+#playerProgressBarDot {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+}
+
+#playerControls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#playerControls > .button {
+    border-radius: 100%;
+    padding: 10px;
+}
+
+#musicPlayerContainer > #musicPlayer {
+    width: 240px;
+}
+
+#playlist {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    row-gap: 2px;
+}
+
+#playlist > .playlistItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+
+#playlist > .playlistItem > img {
+    aspect-ratio: 1 / 1;
+    width: 28px;
+    height: auto;
+}
+
+#playlist > .playlistItem:hover > img, #playlist > .playlistItem.playing > img {
+    content: url('/src/icons/play.svg');
+}
+
+#buttonsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#buttonsContainer > .button {
+    margin-top: unset !important;
 }
 
 footer {
@@ -423,5 +578,9 @@ footer code {
     #miniContainer {
         grid-template-columns: 100%;
         column-gap: 0px;
+    }
+
+    #playerAndPlaylist {
+        flex-direction: column;
     }
 }

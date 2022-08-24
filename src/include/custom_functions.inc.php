@@ -17,10 +17,11 @@
         $videoTypes = [ "mp4", "avi" ];
         $bookTypes = [ "epub", "pdf" ];
         $textTypes = [ "txt", "html", "css", "scss", "js", "php", "json", "c", "cpp", "ino", "java", "py", "sh", "bat", "sql" ];
-        $archiveType = [ "zip", "tar", "rar", "7z" ];
+        $archiveType = [ "zip", "tar", "rar", "7z", "xz" ];
+        $installDiskType = [ "iso", "img" ];
         $androidInstallerTypes = [ "apk", "apkm", "abb" ];
-
-        $extension = explode( ".", $fileName )[ count( explode( ".", $fileName ) ) - 1 ];
+        $extension = getFileExtension( $fileName );
+        #$extension = explode( ".", $fileName )[ count( explode( ".", $fileName ) ) - 1 ];
 
         if ( in_array( $extension, $audioTypes ) ) 
             return "Audio";
@@ -39,6 +40,9 @@
 
         else if ( in_array( $extension, $archiveType ) )
             return "Archive";
+
+        else if ( in_array( $extension, $installDiskType ) )
+            return "Install Disk";
 
         else if ( in_array( $extension, $androidInstallerTypes ) )
             return "Android Installer";
@@ -119,6 +123,11 @@
             if ( $array[ $i ] == $string )
                 return TRUE;
         return FALSE;
+    }
+
+    function contains ( $whereToSearch, $whatToSearch ) {
+        #if ( preg_match( '/(?<=[\s,.:;"\']|^)' . $whatToSearch . '(?=[\s,.:;"\']|$)/', $whereToSearch ) ) return true;
+        return strpos( $whereToSearch, $whatToSearch ) !== false;
     }
 
     function printAppIconName ( $appName ) {

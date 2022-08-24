@@ -42,7 +42,7 @@ This is an unofficial project
 
     /*Variables for Alternative Input Type Text*/
     --m3-inputText-alternative-noIMG-padding: 8px 16px 8px 16px;
-    --m3-inputText-alternative-height: 56px;
+    --m3-inputText-alternative-height: 36px;
     --m3-inputText-alternative-borderRadius: 12px 12px 0px 0px;
     --m3-inputText-alternative-borderWidth-active: 0px 0px 4px 0px;
 
@@ -111,6 +111,7 @@ This is an unofficial project
     height: var( --m3-iconButton-size );
     padding: 0px;
     margin: var( --m3-iconButton-margin );
+    aspect-ratio: 1 / 1;
 }
 .button.iconStyle > img { aspect-ratio: 1 / 1; width: var( --m3-iconButton-innerIMG-size ); height: auto; }
 

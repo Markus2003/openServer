@@ -144,9 +144,11 @@ $('form#uploadPackage').submit(function (e) {
 });
 
 $('form#uploadFile').submit(function (e) {
-    $('#uploadFile').after('<div class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Uploading File...</div>')
     e.preventDefault();
+    $('#uploadFile').after('<div id=\'uploadStatus\' class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Uploading File...</div>')
     var formData = new FormData(this);
+    $('#file').attr('disabled', 'disabled');
+    $('#submit').attr('disabled', 'disabled');
     $.ajax({
         url: '/src/API/uploadFile.php',
         type: 'POST',
@@ -156,6 +158,12 @@ $('form#uploadFile').submit(function (e) {
                 alert( data + '\nYou will be now redirected' );
             //window.location.href = $('#sourcePath').val();
             history.back();
+        },
+        error: function () {
+            $('#file').removeAttr('disabled');
+            $('#submit').removeAttr('disabled');
+            $('#uploadStatus').remove();
+            windows.alert('Something went wrong, file was not uploaded...');
         },
         cache: false,
         contentType: false,
