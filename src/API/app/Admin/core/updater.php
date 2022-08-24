@@ -1,5 +1,6 @@
 <div class='sectionTitle'><img src='src/icons/updaterIcon.svg' alt='Update Server' />Server Updater</div><hr>
 <?php include '../src/include/customFunctions.inc.php' ?>
+<script src='/src/marked.min.js'></script>
 <style>
     .versionInfoContainer {
         display: flex;
@@ -57,7 +58,7 @@
         </div>
         <div id='currentChangelog'>
             <b><p>Changelog for the Actual Version (<?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/version' ) ?>):</p></b>
-            <p id='content'><?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/changelog' ) ?></p>
+            <p id='content'></p>
         </div>
     </div>
     <div class='visualVersionInfo'>
@@ -83,6 +84,7 @@
     var localVersion = '';
 
     getVersion();
+    $('#currentChangelog > #content').html( marked.parse( '<?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/changelog' ) ?>' ) );
 
     function getVersion () {
         $.ajax({
@@ -204,7 +206,7 @@
                                     type: 'GET',
                                     success: function (data) {
                                         $('#updateIconStatus').attr('src', 'src/icons/updateReadyToDownload.svg');
-                                        $('#newUpdateChangelog > #content').html( data );
+                                        $('#newUpdateChangelog > #content').html( marked.parse( data.replaceAll('\\n', '\n') ) );
                                     },
                                     error: function () {
                                         $('#updateIconStatus').attr('src', 'src/icons/updateReadyToDownload.svg');

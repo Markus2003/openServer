@@ -19,22 +19,15 @@
                     <th colspan='2'><h2 id='videoTitle' class='left'>Loading Title...</h2></th>
                 </tr>
                 <tr>
-                    <td id='descriptionContainer'>
-                        Description:
-                        <p id='videoDescription'>
-                            Not Assigned yet
-                        </p>
-                    </td>
-                    <td style='width: fit-content'>
-                        <video id='videoPlayer' class='right' controls>
-                            <source id='sourcePath' src='<?php echo $_GET["path"] ?>' currentFile='<?php echo $_GET["fileName"] ?>' />
-                        </video>
-                    </td>
+                    <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/videoPlayerChunk.inc.php' ?>
                 </tr>
                 <tr>
-                    <td id='buttonsContainer' colspan='2'>
-                        <button type='button' id='previousFilm' class='button sensibleActionButton primaryColor-Dark shadow'><img src='/src/icons/back_arrow.svg' />Previous Film</button>
-                        <button type='button' id='nextFilm' class='button sensibleActionButton primaryColor-Dark shadow'>Next Film<img src='/src/icons/forward_arrow.svg' /></button>
+                    <td colspan='2'>
+                        <div id='buttonsContainer'>
+                            <button type='button' id='previousFile' class='button sensibleActionButton primaryColor-Dark shadow'><img src='/src/icons/back_arrow.svg' />Previous Film</button>
+                            <a id='quickDownload' href='<?php echo $_GET["path"] ?>' download><button type='button' class='button primaryColor-Dark shadow'><img src='/src/icons/download.svg' />Quick Download</button></a>
+                            <button type='button' id='nextFile' class='button sensibleActionButton primaryColor-Dark shadow'>Next Film<img src='/src/icons/forward_arrow.svg' /></button>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -47,27 +40,10 @@
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/script.html.php' ?>
     <script src='/src/API/tvAndFilmInfo.js'></script>
     <script>
-        var files = [ <?php $rawFolder = scandir( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) ); foreach ( $rawFolder as $chunk ) if ( is_file( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) . $chunk ) and isReadableForServer( $chunk ) == "Video" ) echo "'" . $chunk . "', "; ?> ];
+        var files = [ <?php $rawFolder = scandir( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) ); foreach ( $rawFolder as $chunk ) if ( is_file( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) . $chunk ) and isReadableForServer( $chunk ) == "Video" ) echo "'" . addslashes( $chunk ) . "', "; ?> ];
         var mainPath = '<?php echo str_replace( $_GET["fileName"], '', $_GET["path"] ) ?>';
         $('#videoTitle').html( removeExtensionFromFile('<?php echo $_GET["fileName"] ?>') );
-        
-        $('#previousFilm').click(function () {
-            if ( files.indexOf( $('#sourcePath').attr('currentFile') ) > 0 ) {
-                $('#videoTitle').html( removeExtensionFromFile( files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ] ) );
-                $('#sourcePath').attr('src', mainPath + files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ]);
-                $('#sourcePath').attr('currentFile', files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ] );
-                $('#videoPlayer')[0].load();
-            }
-        });
-
-        $('#nextFilm').click(function () {
-            if ( files.indexOf( $('#sourcePath').attr('currentFile') ) < files.length - 1 ) {
-                $('#videoTitle').html( removeExtensionFromFile( files[ files.indexOf( $('#sourcePath').attr('currentFile') ) + 1 ] ) );
-                $('#sourcePath').attr('src', mainPath + files[ files.indexOf( $('#sourcePath').attr('currentFile') ) + 1 ]);
-                $('#sourcePath').attr('currentFile', files[ files.indexOf( $('#sourcePath').attr('currentFile') ) + 1 ] );
-                $('#videoPlayer')[0].load();
-            }
-        });
     </script>
+    <script src='/src/API/videoPlayerControls.js'></script>
 
 </html>
