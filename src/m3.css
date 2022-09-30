@@ -28,6 +28,7 @@ This is an unofficial project
     --m3-iconButton-innerIMG-size: 24px;
     --m3-iconButton-size: 40px;
     --m3-iconButton-margin: 8px 8px 8px 8px;
+    --m3-iconButton-borderRadius: 100%;
 
     /*Variables for Button of Tab Containers*/
     --m3-tabButton-borderRadius: 0px 0px 5px 5px;
@@ -63,6 +64,9 @@ This is an unofficial project
     --m3-fab-borderRadius: 16px;
     --m3-fab-margin: 16px;
     --m3-fab-innerIMG-size: 24px;
+
+    /*Variables for Fieldset*/
+    --m3-fieldset-borderRadius: 5px;
 
     /*Variables for general elements*/
     --m3-element-borderRadius-min: 25px;
@@ -109,6 +113,7 @@ This is an unofficial project
     align-items: center;
     width: var( --m3-iconButton-size );
     height: var( --m3-iconButton-size );
+    border-radius: var( --m3-iconButton-borderRadius );
     padding: 0px;
     margin: var( --m3-iconButton-margin );
     aspect-ratio: 1 / 1;
@@ -247,3 +252,7 @@ This is an unofficial project
 }
 .fab:hover { background-color: var( --primaryColor-Dark ); }
 .fab > img { aspect-ratio: 1 / 1; width: var( --m3-fab-innerIMG-size ); height: auto; }
+
+fieldset {
+    border-radius: 5px;
+}

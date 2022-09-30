@@ -2,7 +2,7 @@
 
     function isReadableForBrowser ( $fileName ) {
 
-        $knowTypes = [ "mp3", "mp4", "m4a", "png", "jpg", "jpeg", "gif", "pdf", "txt", "html", "css", "scss", "js", "php", "json", "c", "cpp", "ino", "java", "py", "sh", "bat" ];
+        $knowTypes = [ "mp3", "mp4", "m4a", "opus", "png", "jpg", "jpeg", "gif", "pdf", "txt", "html", "css", "scss", "js", "php", "json", "c", "cpp", "ino", "java", "py", "sh", "bat" ];
 
         if ( in_array( explode( ".", $fileName )[ count( explode( ".", $fileName ) ) - 1 ], $knowTypes ) )
             return TRUE;
@@ -12,9 +12,9 @@
     }
 
     function isReadableForServer ( $fileName ) {
-        $audioTypes = [ "mp3", "m4a" ];
+        $audioTypes = [ "mp3", "m4a", "opus" ];
         $imageTypes = [ "png", "jpg", "jpeg", "gif" ];
-        $videoTypes = [ "mp4", "avi" ];
+        $videoTypes = [ "mp4", "avi", "mkv" ];
         $bookTypes = [ "epub", "pdf" ];
         $textTypes = [ "txt", "html", "css", "scss", "js", "php", "json", "c", "cpp", "ino", "java", "py", "sh", "bat", "sql" ];
         $archiveType = [ "zip", "tar", "rar", "7z", "xz" ];

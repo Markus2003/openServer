@@ -1,1 +1,1 @@
-<a href='/src/API/setup.php'><div class='fab shadow'><img/></div></a>
+<a href='/src/API/setup.php'><div class='fab shadow'><img src='/src/icons/alert.svg' /></div></a>

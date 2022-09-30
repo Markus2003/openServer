@@ -120,10 +120,15 @@ html {
     margin-bottom: 5px;
 }
 
-#changelog > ul > li > code {
+#changelog > ul > li > code, #changelog > ul > li > a {
     background-color: var( --primaryColor );
     padding: 2px;
     border-radius: 5px;
+    color: white;
+}
+
+#changelog > ul > li > a {
+    text-decoration: underline;
 }
 
 #directory {
@@ -305,7 +310,7 @@ html {
     margin-bottom: 20px;
 }
 
-fieldset {
+fieldset.search {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -313,7 +318,7 @@ fieldset {
     border-radius: var( --m3-element-borderRadius-min );
 }
 
-fieldset > div {
+fieldset.search > div {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -483,13 +488,11 @@ fieldset > div {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    column-gap: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 #playerControls > .button {
-    border-radius: 100%;
     padding: 10px;
 }
 
@@ -500,8 +503,8 @@ fieldset > div {
 #playlist {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     justify-content: flex-start;
+    align-items: stretch;
     row-gap: 2px;
 }
 
@@ -511,6 +514,11 @@ fieldset > div {
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+    transition: var( --m3-element-transition );
+}
+
+#playlist > .playlistItem > p {
+    margin: 0;
 }
 
 #playlist > .playlistItem > img {
@@ -519,8 +527,18 @@ fieldset > div {
     height: auto;
 }
 
-#playlist > .playlistItem:hover > img, #playlist > .playlistItem.playing > img {
+#playlist > .playlistItem:hover > #playingButton, #playlist > .playlistItem.playing > #playingButton {
     content: url('/src/icons/play.svg');
+}
+
+#playlist > .playlistItem.playing:hover > #removeButton {
+    content: url('/src/icons/bin.svg');
+}
+
+#playlist > .playlistItem.playing {
+    background-color: var( --primaryColor-Dark );
+    padding: var( --m3-element-padding);
+    border-radius: var( --m3-element-borderRadius-min);
 }
 
 #buttonsContainer {
@@ -536,6 +554,38 @@ fieldset > div {
     margin-top: unset !important;
 }
 
+#fsOps {
+    display: hidden;
+}
+
+#fsOps.show {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 5px;
+    position: fixed;
+    padding: 10px;
+    bottom: 10px;
+    right: 30px;
+    background-color: var( --hoverColor );
+    border-radius: var( --m3-element-borderRadius-min );
+}
+
+#fsOps > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 5px;
+    background-color: var( --primaryColor );
+    padding: 10px;
+    border-radius: var( --m3-element-borderRadius-min );
+}
+
+#fsOps > div > p {
+    margin: 0px;
+}
+
 footer {
     position: relative;
     padding: 20px 10px;
@@ -547,10 +597,6 @@ footer {
 
 footer code {
     font-size: 18px;
-}
-
-.fab > img {
-    content: url('/src/icons/alert.svg');
 }
 
 #version, #version > code {

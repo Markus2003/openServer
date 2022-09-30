@@ -6,5 +6,6 @@
     "instructions": [
         "CREATE TABLE `users` ( `email` varchar(320) NOT NULL, `password` varchar(255) NOT NULL, `username` varchar(30) NOT NULL, `userpath` varchar(15) NOT NULL, `flags` tinyint(1) NOT NULL DEFAULT 0, PRIMARY KEY (`email`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;"
     ],
-    "queryCheck": "SHOW TABLES FROM `openServer`;"
+    "queryCheck": "SHOW TABLES FROM `openServer`;",
+    "queryResultCheck": 1
 }

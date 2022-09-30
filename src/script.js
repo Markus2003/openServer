@@ -163,7 +163,7 @@ $('form#uploadFile').submit(function (e) {
             $('#file').removeAttr('disabled');
             $('#submit').removeAttr('disabled');
             $('#uploadStatus').remove();
-            windows.alert('Something went wrong, file was not uploaded...');
+            window.alert('Something went wrong, file was not uploaded...');
         },
         cache: false,
         contentType: false,
