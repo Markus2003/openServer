@@ -27,35 +27,60 @@ function updatePlaylist () {
     })
 }
 
+function resetLabels () {
+    $("#playerTime > #totalTime").html("--:--");
+    $("#playerTime > #currentTime").html("--:--");    
+}
+
+function nextSong () {
+
+}
+
+function previousSong () {
+
+}
+
+function restartSong () {
+
+}
+
+function handlerBack () {
+
+}
+
 updatePlaylist();
 
 $('.playlistItem').click(function () {
-    $('#musicTitle').html( removeExtensionFromFile( $(this).attr('filename') ) );
-    $('#sourcePath').attr('src', mainPath + $(this).attr('filename'));
-    $('#quickDownload').attr('href', mainPath + $(this).attr('filename'));
-    $('#sourcePath').attr('currentFile', $(this).attr('filename') );
-    $('#musicPlayer')[0].load();
-    $("#playerTime > #totalTime").html("--:--");
-    $("#playerTime > #currentTime").html("--:--");
-    isPlaying = false;
-    $("#playPause > img").attr("src", "/src/icons/play.svg");
-    updatePlaylist();
-    ballSeek();
-});
-
-$('#previous').click(function () {
-    if ( files.indexOf( $('#sourcePath').attr('currentFile') ) > 0 ) {
-        $('#musicTitle').html( removeExtensionFromFile( files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ] ) );
-        $('#sourcePath').attr('src', mainPath + files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ]);
-        $('#quickDownload').attr('href', mainPath + files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ]);
-        $('#sourcePath').attr('currentFile', files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ] );
+    if ( $('#sourcePath').attr('currentFile') != $(this).attr('filename') ) {
+        $('#musicTitle').html( removeExtensionFromFile( $(this).attr('filename') ) );
+        $('#sourcePath').attr('src', mainPath + $(this).attr('filename'));
+        $('#quickDownload').attr('href', mainPath + $(this).attr('filename'));
+        $('#sourcePath').attr('currentFile', $(this).attr('filename') );
         $('#musicPlayer')[0].load();
-        $("#playerTime > #totalTime").html("--:--");
-        $("#playerTime > #currentTime").html("--:--");
+        resetLabels();
         isPlaying = false;
         $("#playPause > img").attr("src", "/src/icons/play.svg");
         updatePlaylist();
         ballSeek();
+    }
+});
+
+$('#previous').click(function () {
+    if ( $('#currentTime').html() < '00:03' )
+        if ( files.indexOf( $('#sourcePath').attr('currentFile') ) > 0 ) {
+            $('#musicTitle').html( removeExtensionFromFile( files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ] ) );
+            $('#sourcePath').attr('src', mainPath + files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ]);
+            $('#quickDownload').attr('href', mainPath + files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ]);
+            $('#sourcePath').attr('currentFile', files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ] );
+            $('#musicPlayer')[0].load();
+            resetLabels();
+            isPlaying = false;
+            $("#playPause > img").attr("src", "/src/icons/play.svg");
+            updatePlaylist();
+            ballSeek();
+        }
+    else {
+        
     }
 });
 
@@ -66,8 +91,7 @@ $('#next').click(function () {
         $('#sourcePath').attr('currentFile', files[ files.indexOf( $('#sourcePath').attr('currentFile') ) + 1 ] );
         $('#quickDownload').attr('href', mainPath + files[ files.indexOf( $('#sourcePath').attr('currentFile') ) + 1 ]);
         $('#musicPlayer')[0].load();
-        $("#playerTime > #totalTime").html("--:--");
-        $("#playerTime > #currentTime").html("--:--");
+        resetLabels();
         isPlaying = false;
         $("#playPause > img").attr("src", "/src/icons/play.svg");
         updatePlaylist();
@@ -78,7 +102,7 @@ $('#next').click(function () {
 $(window).on("load", function () {
     audioPlay();
     ballSeek();
-    $('.playlistItem').each(function () {
+    $('.playlistItem > p').each(function () {
         $(this).html( removeExtensionFromFile( $(this).html() ) );
     });
 
