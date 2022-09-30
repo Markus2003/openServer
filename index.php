@@ -31,8 +31,6 @@
                             <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/changelog' ) ?>
                         </div>
                     </article>
-                    <article id='newUpdateAvailable'>
-                    </article>
                 </section>
                 <div id='miniContainer'>
                     <?php
@@ -89,59 +87,6 @@
     <script>
         
         $('#changelog').html( marked.parse( $('#changelog').html().replaceAll('\\n', '\n') ) );
-
-        var cloudVersion = '';
-        var localVersion = '';
-
-        checkUpdateAvailability();
-
-        function compare(a, b) {
-            if (a === b) return 0;
-            var a_components = a.split(".");
-            var b_components = b.split(".");
-            var len = Math.min(a_components.length, b_components.length);
-            for (var i = 0; i < len; i++) {
-                if (parseInt(a_components[i]) > parseInt(b_components[i])) return 1;
-                if (parseInt(a_components[i]) < parseInt(b_components[i])) return -1;
-            }
-            if (a_components.length > b_components.length) return 1;
-            if (a_components.length < b_components.length) return -1;
-            return 0;
-        }
-
-        function checkUpdateAvailability () {
-            $.ajax({
-                url: 'https://raw.githubusercontent.com/Markus2003/openServer/main/src/configs/version',
-                type: 'GET',
-                success: function (data) {
-                    cloudVersion = data;
-                    $.ajax({
-                        url: '/src/configs/version',
-                        type: 'GET',
-                        success: function (data) {
-                            localVersion = data;
-                            switch ( compare( localVersion, cloudVersion ) ) {
-                                case -1:
-                                    $('#newUpdateAvailable').html('Hello There! It seems that Markus2003 has released a new version of openServer, ask you server Admin to install it!')
-                                break;
-                            }
-                        },
-                        error: function () {
-
-                        },
-                        cache: false,
-                        contentType: false,
-                        processData: false
-                    });
-                },
-                error: function () {
-
-                },
-                cache: false,
-                contentType: false,
-                processData: false
-            });
-        }
 
     </script>
 

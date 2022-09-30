@@ -21,9 +21,9 @@
                     if ( isset( $_GET["filters"] ) )
                         $filters = json_decode( $_GET["filters"], true );
                 ?>
-                <fieldset>
+                <fieldset class='search'>
                     <legend>Filters</legend>
-                    <div><!-- Custom Checkbox https://codepen.io/alvarotrigo/pen/wvyvjva?editors=1100 -->
+                    <div>
                         Sections to Search:
                         <?php
                             foreach ( $rawFolder as $folder )
@@ -53,7 +53,7 @@
                         ?>
                     </div>
                 </fieldset>
-                <fieldset>
+                <fieldset class='search'>
                     <legend>Other Search Options</legend>
                     <div>
                         <?php
@@ -252,7 +252,7 @@
             var result = [];
             $('.' + className).each(function () {
                 if ( !$(this).hasClass('active') )
-                    result.push( $(this).id );
+                    result.push( $(this).attr('id') );
             });
             return result;
         }

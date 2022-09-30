@@ -7,6 +7,8 @@ Well, you are in the right place!
 - [What is openServer](#what-is-openserver)
 - [openServer development support](#openserver-development-support)
 - [How do I update openServer?](#how-do-i-update-openserver)
+    - [The Modern Way](#the-modern-way)
+    - [The Deprecated Way](#the-deprecated-way)
 - [How do I install openServer on my machine?](#how-do-i-install-openserver-on-my-machine)
 - [Changelog](#changelog)
 - [Upcoming Features](#upcoming-features)
@@ -29,6 +31,17 @@ Well, you are in the right place!
 <br><br>
 
 ## How do I update openServer?
+### The modern Way:
+From version `BETA-0.5.9` you can update by selecting your favourite `Release Channel` (`ALPHA`, `BETA`, `STABLE`), to do so:
+- Log-In as Administrator on openServer
+- Go to the `Account Manager` page and click the `Go To Administration Page` button
+- Now click on `Server Updater` Section
+- Change the `Release Channel` if the default option doesn't fit your needs
+- Click `Check Update Availability` button and follow the instructions
+- Done, you are now running the latest version of openServer!
+<br><br>
+
+### The Deprecated Way:
 If you have installed version `BETA-0.5.6` or newer, you can easily update to the latest version by following the instructions below:
 - Log-In as Administrator on openServer
 - Go to the `Account Manager` page and click the `Go To Administration Page` button
@@ -41,7 +54,7 @@ If you have installed version `BETA-0.5.6` or newer, you can easily update to th
 ##### For the moment I'm only supporting `Linux`, so if you have `Windows` you must wait (for `macOS` users: leave this Repo, I don't have enough money to buy Apple products)<br>
 - First of all you must run this command to install `apache2` and `PHP`:
 ```bash
-sudo apt-get install apache2 php -y
+sudo apt-get install apache2 php8.1 -y
 ```
 - (OPTIONAL) I strongly reccomend to install also `Cockpit` to manage remotely your server:
 ```bash
@@ -53,11 +66,11 @@ cd /var/www/html/ && rm ./*
 ```
 - Download `openServer` and extract it:
 ```bash
-wget https://github.com/Markus2003/openServer/releases/download/0.5.8/0.5.8.zip && unzip 0.5.8.zip && rm 0.5.8.zip
+wget https://github.com/Markus2003/openServer/releases/download/0.5.9/0.5.9.zip && unzip 0.5.9.zip && rm 0.5.9.zip
 ```
 - Edit your `php.ini` to grant app upload (`php.ini` path may change depending on the system):
 ```bash
-sudo nano /etc/php/7.4/apache2/php.ini
+sudo nano /etc/php/8.1/apache2/php.ini
 ```
 - Make the necessary modifications, then save and exit:
 ```bash
@@ -88,14 +101,18 @@ sudo chown <username>:<username> -R /var/www/html
 <br><br>
 
 # Changelog
-Here we are with the `Utility there, Utility over there...` version (formally `BETA-0.5.8`)<br>
+Here we are with the `Uni is coming and I can't stop it...` version (formally `BETA-0.5.9`)<br>
 ## Features
-This upgrade also upgrade Changelog Viewer, so the info about the new update can be barely visible
-- Fixed <code>Personal Vault</code> Vulnerability
-- Improved File Type Recognition in <code>Personal Vault</code>
-- Prototype of a the <code>Music Player</code>
-- Prototype of the <code>Server File Finder</code>
-- Now you can upload multiple files
+
+- Fixed `Server File Finder` Vulnerability
+- Fixed Critical problem on flashing `Custom Updates`
+- Style of `iconStyle` Buttons updated
+- Improved `Music Player` with new feature and style
+- Better handling of `CSS` and `JS` file update
+- New version of the `Update` Section, you can now choose which `Release Channel` you want to update
+- You can now safely reset the Database if something goes wrong
+- `Copy-Paste` and `Move` features of the `Personal Vault` now working
+
 
 ## Some Bugs
 - Some visual bugs
@@ -105,6 +122,7 @@ This upgrade also upgrade Changelog Viewer, so the info about the new update can
 - App extraction and download from `Applications` Section
 - A Repo hosting some App for the Server
 - Enable all Sections in the Admin Application
+- A pratical Installer written in `Bash` for Linux
 - Many others...
 <br><br>
 

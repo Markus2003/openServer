@@ -1,6 +1,7 @@
 <?php
     include $_SERVER["DOCUMENT_ROOT"] . '/src/include/custom_functions.inc.php';
     $filesToDelete = [
+        '/src/API/rename.php'
     ];
     $foldersToDelete = [
     ];

@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/super_top.inc.php' ?>
+<?php
+    if ( !isset( $_SESSION["openServerUserpath"] ) ) {
+        header('Location: /login.php');
+        exit();
+    }
+?>
     
     <head>
         <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/head_content.html.php' ?>
@@ -105,6 +111,7 @@
                     <span class='sectionTitle'><img src='/src/icons/file.svg' width='20px' height='20px' /><b>Files</b></span>
                 </section>
                 <?php
+                    session_start();
                     foreach ( $fileList as $file ) {
                         echo "
                             <section class='primaryColor shadow'>
@@ -166,17 +173,26 @@
                                             } else
                                                 echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file . "'><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/launch.svg' /></button></a>";
                                     }
-                                    echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file . "' download><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/download.svg' /></button></a>
-                                    <button type='button' class='button primaryColor-Dark right shadow' onclick='rename( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/edit.svg' /></button>
-                                    <button type='button' class='button primaryColor-Dark right shadow' onclick='copy( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/copy.svg' /></button>
-                                    <button type='button' class='button primaryColor-Dark right shadow' onclick='mv( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/cut.svg' /></button>
-                                    <button type='button' class='button primaryColor-Dark right shadow' onclick='deleteFile( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/bin.svg' /></button>
-                                </article>
+                                    echo "<a href='" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file . "' download><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/download.svg' /></button></a>";
+                                    echo "<button type='button' class='button primaryColor-Dark right shadow' onclick='rename( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/edit.svg' /></button>";
+                                    if ( findStringInArray( $_SESSION["openServerFileHolding"], getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file ) and $_SESSION["openServerFileHoldingType"] == "COPY" ) {
+                                        echo "<button type='button' class='button primaryColor-Dark right shadow copy' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "' disabled><img src='/src/icons/copy.svg' /></button>";
+                                    } else {
+                                        echo "<button type='button' class='button primaryColor-Dark right shadow copy' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "'><img src='/src/icons/copy.svg' /></button>";
+                                    }
+                                    if ( findStringInArray( $_SESSION["openServerFileHolding"], getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file ) and $_SESSION["openServerFileHoldingType"] == "MOVE" ) {
+                                        echo "<button type='button' class='button primaryColor-Dark right shadow move' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "' disabled><img src='/src/icons/cut.svg' /></button>";
+                                    } else {
+                                        echo "<button type='button' class='button primaryColor-Dark right shadow move' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "'><img src='/src/icons/cut.svg' /></button>";
+                                    }
+                                    echo "<button type='button' class='button primaryColor-Dark right shadow' onclick='deleteFile( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/bin.svg' /></button>";
+                                echo "</article>
                             </section>
                         ";
                     }
                 ?>
                 <button type='button' id='uploadFile' class='button sensibleActionButton primaryColor shadow' onclick='uploadFile("Personal Vault", "<?php echo getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder ?>")'><img src='/src/icons/upload.svg' />Upload a File</button>
+            
             </div>
 
             <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/footer.html.php' ?>
@@ -185,7 +201,16 @@
     </body>
 
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/script.html.php' ?>
+    <div id='fsOps' class=''>
+        <button id='actHere' class='button iconStyle primaryColor shadown' path='<?php echo getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder ?>'><img src='/src/icons/paste.svg' /></button>
+        <button id='cancelAct' class='button iconStyle primaryColor shadown'><img src='/src/icons/close.svg' /></button>
+        <div>
+            Holding <p id='counter'>0</p> files... <p id='type'></p>
+        </div>
+    </div>
     <script>
+        updateLabel();
+
         function rename ( directory, oldChunkName ) {
             var newChunkName = prompt("Type your new chunk name for '" + oldChunkName + "' (Remember to write the extension!):\nLeave blank to abort");
             if ( newChunkName != '' && newChunkName != null )
@@ -201,21 +226,79 @@
                 });
         }
 
-        function mv ( originalPath, fileName ) {
-            var response = prompt("Where do you want to move '" + fileName + "'?\nLeave blank to abort");
-            if ( response != '' )
-                $.ajax({
-                    url: '/src/API/mv.php?fileName=' + fileName,
-                    type: 'GET',
-                    success: function (data) {
-                        alert( data );
-                        location.reload();
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
+        function updateLabel () {
+            $.ajax({
+                url: '/src/API/getHoldingNumber.php',
+                type: 'GET',
+                success: function ( data ) {
+                    data = JSON.parse( data );
+                    if ( data.count != 0 ) {
+                        $('#fsOps').addClass('show');
+                        $('#fsOps > div > #counter').html( data.count );
+                        $('#fsOps > div > #type').html( "(" + data.type + ")" );
+                    }
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
         }
+
+        $('#actHere').click(function () {
+            $('#fsOps > div').html('Working... <img src=\'/src/icons/loading.svg\' width=\'24px\' height=\'24px\' />');
+            console.log( $(this).attr('path') );
+            $.ajax({
+                url: '/src/API/completeAction.php?path=' + $(this).attr('path'),
+                type: 'GET',
+                success: function ( data ) {
+                    location.reload();
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
+        $('#cancelAct').click(function () {
+            $.ajax({
+                url: '/src/API/destroyFileHolding.php',
+                type: 'GET',
+                success: function ( data ) {
+                    location.reload();
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+        });
+
+        $('.copy').click(function () {
+            $(this).prop('disabled', true);
+            $.ajax({
+                url: '/src/API/addNewFileToHold.php?path=' + $(this).attr('path') + '&type=COPY',
+                type: 'GET',
+                success: function ( data ) {
+                    updateLabel();
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+        });
+
+        $('.move').click(function () {
+            $(this).prop('disabled', true);
+            $.ajax({
+                url: '/src/API/addNewFileToHold.php?path=' + $(this).attr('path') + '&type=MOVE',
+                type: 'GET',
+                success: function ( data ) {
+                    updateLabel();
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+        });
 
         $('.privateInstall').click(function () {
             $.ajax({
