@@ -1,0 +1,44 @@
+{
+    "0": {
+        "version": "0.0.1",
+        "channel": "ALPHA",
+        "codeName": "Hello, GitHub!",
+        "changelog": null,
+        "published": true
+    },
+    "1": {
+        "version": "0.5.5",
+        "channel": "BETA",
+        "codeName": "Go Beta, Go!",
+        "changelog": null,
+        "published": true
+    },
+    "2": {
+        "version": "0.5.6",
+        "channel": "BETA",
+        "codeName": "Is that a... Player?",
+        "changelog": null,
+        "published": true
+    },
+    "3": {
+        "version": "0.5.7",
+        "channel": "BETA",
+        "codeName": "Exams are gone, now I can code",
+        "changelog": null,
+        "published": true
+    },
+    "4": {
+        "version": "0.5.8",
+        "channel": "BETA",
+        "codeName": "Utility there, Utility over there...",
+        "changelog": "This upgrade also upgrade Changelog Viewer, so the info about the new update can be barely visible\n- Fixed `Personal Vault` Vulnerability\n- Improved File Type Recognition in `Personal Vault`\n- Prototype of a the `Music Player`\n- Prototype of the `Server File Finder`\n- Now you can upload multiple files",
+        "published": true
+    },
+    "5": {
+        "version": "0.5.9",
+        "channel": "BETA",
+        "codeName": "Uni is coming and I can't stop it...",
+        "changelog": "\n- Fixed `Server File Finder` Vulnerability\n- Fixed Critical problem on flashing `Custom Updates`\n- Style of `iconStyle` Buttons updated\n- Improved `Music Player` with new feature and style\n- Better handling of `CSS` and `JS` file update\n- New version of the `Update` Section, you can now choose which `Release Channel` you want to update\n- You can now safely reset the Database if something goes wrong\n- `Copy-Paste` and `Move` features of the `Personal Vault` now working",
+        "published": true
+    }
+}
