@@ -3,6 +3,7 @@
     
     <head>
         <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/head_content.html.php' ?>
+        <!--<link href='/src/video-js.min.css' rel='stylesheet' />-->
     </head>
 
     <body>
@@ -38,7 +39,10 @@
     </body>
     
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/script.html.php' ?>
-    <script src='/src/API/tvAndFilmInfo.js'></script>
+    <!--<script src='/src/videojs-vlc.js'></script>-->
+    <!--<script src='/src/videojs.min.js'></script>-->
+    <!--<script src='/src/vhs-utils.min.js'></script>-->
+    <!--<script src='/src/API/tvAndFilmInfo.js'></script>-->
     <script>
         var files = [ <?php $rawFolder = scandir( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) ); foreach ( $rawFolder as $chunk ) if ( is_file( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) . $chunk ) and isReadableForServer( $chunk ) == "Video" ) echo "'" . addslashes( $chunk ) . "', "; ?> ];
         var mainPath = '<?php echo str_replace( $_GET["fileName"], '', $_GET["path"] ) ?>';

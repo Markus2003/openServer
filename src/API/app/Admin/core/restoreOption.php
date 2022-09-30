@@ -26,7 +26,7 @@
     </div>
     <div>
         Unable to use Database?
-        <button type='button' id='recreateDatabase' class='button primaryColor'><img src='src/icons/database.svg' alt='Restore Database' />Restore Database Structure (Not Working yet)</button>
+        <button type='button' id='recreateDatabase' class='button primaryColor'><img src='src/icons/database.svg' alt='Restore Database' />Restore Database Structure</button>
     </div>
     <div>
         Update gone in the wrong way?
@@ -56,15 +56,20 @@
     });
 
     $('#recreateDatabase').click(function () {
+        if ( !confirm("Are you sure you want to reset the database?\nThis operation cannot be reversed!") )
+            return;
         $('#restoreOptions').html("<img src='/src/icons/loading.svg' /><br><p>Please wait, we are working on it...<br><b>DO NOT close the page, otherwise the process will fail</b></p>");
         $.ajax({
             url: 'core/API/recreateDatabase.php',
             type: 'GET',
             success: function (data) {
-                snackbarNotification(data, 'info.svg');
+                console.log(data);
+                snackbarNotification( "Reconstruction completed!", 'info.svg');
+                updateView('restoreOption.php');
             },
             error: function () {
                 snackbarNotification('There was an error when trying connecting to the API<br>Try again in a few moments', 'hexError.svg');
+                updateView('restoreOption.php');
             },
             cache: false,
             contentType: false,

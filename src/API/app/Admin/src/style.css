@@ -22,6 +22,7 @@
     --m3-iconButton-innerIMG-size: 24px;
     --m3-iconButton-size: 40px;
     --m3-iconButton-margin: 8px 8px 8px 8px;
+    --m3-iconButton-borderRadius: 100%;
 
     --m3-standard-borderRadius: 100px;
     --m3-element-transition: ease 0.5s;
@@ -109,6 +110,7 @@ a {
     justify-content: center;
     align-items: center;
     padding: var( --m3-button-innerDiv-padding-noIMG );
+    border-radius: var( --m3-iconButton-borderRadius );
     width: var( --m3-iconButton-size );
     height: var( --m3-iconButton-size );
     padding: 0px;

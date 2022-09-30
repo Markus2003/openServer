@@ -38,23 +38,6 @@
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/script.html.php' ?>
     <script src='/src/jsmediatags.min.js'></script>
     <script>
-        function test() {
-            const jsmediatags = window.jsmediatags;
-            jsmediatags.read($('#sourcePath'), {
-                onSuccess: function ( tag ) {
-                    const data = tag.tags.picture.data;
-                    const format = tag.tags.picture.format;
-                    let base64String = "";
-                    for (let i = 0; i < data.length; i++) {
-                        base64String += String.fromCharCode(data[i]);
-                    }
-                    $('#musicImg').attr('src', 'data:' + format + ';base64,' + window.btoa(base64String))
-                },
-                onError: function () {
-                    $('#musicImg').attr('src', '/src/icons/albumDisk.svg')
-                }
-            })
-        }
         var files = [ <?php $rawFolder = scandir( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) ); foreach ( $rawFolder as $chunk ) if ( is_file( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) . $chunk ) and isReadableForServer( $chunk ) == "Audio" ) echo "'" . addslashes( $chunk ) . "', "; ?> ];
         var mainPath = '<?php echo str_replace( $_GET["fileName"], '', $_GET["path"] ) ?>';
         $('#musicTitle').html( removeExtensionFromFile('<?php echo $_GET["fileName"] ?>') );

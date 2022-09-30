@@ -2,6 +2,13 @@
 <?php include '../src/include/customFunctions.inc.php' ?>
 <script src='/src/marked.min.js'></script>
 <style>
+    #updateContainer {
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+        flex-direction: row;
+    }
+
     .versionInfoContainer {
         display: flex;
         justify-content: flex-start;
@@ -45,11 +52,62 @@
         align-items: center;
         row-gap: 10px;
     }
+
+    fieldset.monoContent {
+        border-radius: 5px;
+    }
+
+    fieldset.monoContent > select {
+        background-color: transparent;
+        color: white;
+        width: 100%;
+        border-style: none;
+    }
+
+    .monoContent > select > option {
+        background-color: transparent;
+        color: black;
+        width: 100%;
+        border-style: none;
+    }
+
+    fieldset.monoContent > select {
+        padding: 10px;
+    }
+
+    fieldset.monoContent > .button {
+        margin-top: 10px;
+    }
+
+    #newUpdateChangelog > #content code, #currentChangelog > #content code, #newUpdateChangelog > #content a, #currentChangelog > #content a {
+        background-color: #585858;
+        padding: 2px;
+        border-radius: 5px;
+        color: white;
+    }
+
+    #newUpdateChangelog > #content a, #currentChangelog > #content a {
+        text-decoration: underline;
+    }
+
+    @media screen and ( max-width: 1290px ) {
+
+        #updateContainer {
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: space-around;
+            align-items: stretch;
+        }
+
+    }
 </style>
-<div style='display: flex;justify-content: space-around;align-items: stretch;flex-direction: row;'>
+<div id='updateContainer'>
     <div class='versionInfoContainer'>
         <div>
-            <p><b>Current openServer Version:</b> <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/version' ) ?></p>
+            <?php
+                $updaterSettings = json_decode( file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/updaterSettings.json' ), true )
+            ?>
+            <p><b>Current openServer Version:</b> <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionStatus' ) . '-' . file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/version' ) ?></p>
             <p><b>Codename:</b> <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionName' ) ?></p>
         </div>
         <div id='newUpdateChangelog' style='display: none'>
@@ -57,17 +115,33 @@
             <p id='content'>Loading...</p>
         </div>
         <div id='currentChangelog'>
-            <b><p>Changelog for the Actual Version (<?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/version' ) ?>):</p></b>
+            <b><p>Changelog for the Actual Version (<?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionStatus' ) . '-' . file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/version' ) ?>):</p></b>
             <p id='content'></p>
         </div>
     </div>
     <div class='visualVersionInfo'>
         <img src='src/icons/updateError.svg' id='updateIconStatus' />
-        <button type='button' id='checkUpdate' class='button primaryColor'>Check Update Availability</button>
+        <div class='versionInfoContainer'>
+            <div>
+                <fieldset class='monoContent'>
+                    <legend>Select Your Release Channel</legend>
+                    <select id='releaseSelect'>
+                        <?php
+                            foreach ( $updaterSettings["channelDisponibility"] as $channel )
+                                if ( $channel == $updaterSettings["currentChannel"] )
+                                    echo "<option value='" . $channel . "' selected>" . $channel . '</option>';
+                                else
+                                    echo "<option value='" . $channel . "' >" . $channel . '</option>';
+                        ?>
+                    </select>
+                    <button type='button' id='checkUpdate' class='button primaryColor'>Check Update Availability</button>
+                </fieldset>
+            </div>
+        </div>
         <div id='customUpdateContainer'>
             <button type='button' id='flashCustomUpdate' class='button primaryColor'>Flash a Custom Update</button>
             <form id='uploadUpdate' method='POST' enctype='multipart/form-data' style='display: none'>
-                <input type='file' name='file' id='file' class='button primaryColor' accept='.zip' required />
+                <input type='file' name='file[]' id='file' class='button primaryColor' accept='.zip' required />
                 <input type="hidden" id="sourcePath" name="path" value="/">
                 <input type='submit' id='submit' class='button primaryColor' value='Flash Update' />
             </form>
@@ -80,34 +154,24 @@
     </div>
 </div>
 <script>
-    var cloudVersion = '';
-    var localVersion = '';
+    var cloudVersion = "";
 
-    getVersion();
     $('#currentChangelog > #content').html( marked.parse( '<?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/changelog' ) ?>' ) );
 
-    function getVersion () {
+    $("#releaseSelect").change(function () {
+        var status = $('#updateIconStatus').attr('src');
+        $('#updateIconStatus').attr('src', '/src/icons/loading.svg');
         $.ajax({
-            url: 'https://raw.githubusercontent.com/Markus2003/openServer/main/src/configs/version',
+            url: '/src/API/updateChannelRelease.php?newRelease=' + $(this).children("option:selected").val(),
             type: 'GET',
             success: function (data) {
-                cloudVersion = data;
+                $('#updateIconStatus').attr('src', status);
             },
             cache: false,
             contentType: false,
             processData: false
         });
-        $.ajax({
-            url: '/src/configs/version',
-            type: 'GET',
-            success: function (data) {
-                localVersion = data;
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
-    }
+    });
 
     function compare(a, b) {
         if (a === b) return 0;
@@ -185,63 +249,77 @@
 
     function checkUpdateAvailability () {
         $('#updateIconStatus').attr('src', '/src/icons/loading.svg');
+        var updateChannels = "";
+        var actualVersion = "";
+        var rollingChannel = "BETA";
         $.ajax({
-            url: 'https://raw.githubusercontent.com/Markus2003/openServer/main/src/configs/version',
+            url: 'https://raw.githubusercontent.com/Markus2003/openServer/main/updateChannels',
             type: 'GET',
-            success: function (data) {
-                cloudVersion = data;
-                $.ajax({
-                    url: '/src/configs/version',
-                    type: 'GET',
-                    success: function (data) {
-                        localVersion = data;
-                        switch ( compare( localVersion, cloudVersion ) ) {
-                            case -1:
-                                $('#checkUpdate').html('Download Update');
-                                snackbarNotification('New Update Available!', 'updateReadyToDownload.svg');
-                                $('#newUpdateChangelog > b > #title').html('Changelog for the New Update (' + cloudVersion + '):');
-                                $('#newUpdateChangelog').show();
-                                $.ajax({
-                                    url: 'https://raw.githubusercontent.com/Markus2003/openServer/main/src/res/changelog',
-                                    type: 'GET',
-                                    success: function (data) {
-                                        $('#updateIconStatus').attr('src', 'src/icons/updateReadyToDownload.svg');
-                                        $('#newUpdateChangelog > #content').html( marked.parse( data.replaceAll('\\n', '\n') ) );
-                                    },
-                                    error: function () {
-                                        $('#updateIconStatus').attr('src', 'src/icons/updateReadyToDownload.svg');
-                                        $('#newUpdateChangelog > #content').html('Error: Impossible to retrieve Changelog');
-                                    },
-                                    cache: false,
-                                    contentType: false,
-                                    processData: false
-                                });
-                            break;
-
-                            case 0:
-                            case 1:
-                                $('#updateIconStatus').attr('src', 'src/icons/updateCompleted.svg');
-                                snackbarNotification('No Update Found! Great!', 'updateCompleted.svg');
-                            break;
-                        }
-                    },
-                    error: function () {
-                        $('#updateIconStatus').attr('src', 'src/icons/updateError.svg');
-                        snackbarNotification('There was an error while checking Update Availability', 'updateError.svg');
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
+            success: function ( data ) {
+                updateChannels = JSON.parse( data );
             },
             error: function () {
                 $('#updateIconStatus').attr('src', 'src/icons/updateError.svg');
                 snackbarNotification('There was an error while checking Update Availability', 'updateError.svg');
+                return;
             },
+            async: false,
             cache: false,
             contentType: false,
             processData: false
         });
+        $.ajax({
+            url: '/src/configs/version',
+            type: 'GET',
+            success: function ( data ) {
+                actualVersion = data;
+            },
+            error: function () {
+                $('#updateIconStatus').attr('src', 'src/icons/updateError.svg');
+                snackbarNotification('There was an error while checking Update Availability', 'updateError.svg');
+                return;
+            },
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+        $.ajax({
+            url: '/src/res/updaterSettings.json',
+            type: 'GET',
+            success: function ( data ) {
+                rollingChannel = data;
+            },
+            error: function () {
+                $('#updateIconStatus').attr('src', 'src/icons/updateError.svg');
+                snackbarNotification('There was an error while checking Update Availability', 'updateError.svg');
+                return;
+            },
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+        for ( var i = Object.keys( updateChannels ).length - 1; i >= 0; i-- ) {
+            if ( updateChannels[i].channel == rollingChannel.currentChannel )
+                if ( compare( actualVersion, updateChannels[i].version ) == -1 && updateChannels[i].published ) {
+                    $('#checkUpdate').html('Download Update');
+                    snackbarNotification('New Update Available!', 'updateReadyToDownload.svg');
+                    $('#newUpdateChangelog > b > #title').html('Changelog for the New Update (' + updateChannels[i].channel + '-' + updateChannels[i].version + '):');
+                    $('#newUpdateChangelog').show();
+                    cloudVersion = updateChannels[i].version;
+                    if ( updateChannels[i].changelog != null ) {
+                        $('#updateIconStatus').attr('src', 'src/icons/updateReadyToDownload.svg');
+                        $('#newUpdateChangelog > #content').html( marked.parse( updateChannels[i].changelog.replaceAll('\\n', '\n') ) );
+                    } else {
+                        $('#updateIconStatus').attr('src', 'src/icons/updateReadyToDownload.svg');
+                        $('#newUpdateChangelog > #content').html('Error: Cannot retrieve Changelog');
+                    }
+                    return;
+                }
+        }
+        $('#updateIconStatus').attr('src', 'src/icons/updateCompleted.svg');
+        snackbarNotification('No Update Found! Great!', 'updateCompleted.svg');
     }
 
     function downloadUpdate () {
@@ -301,7 +379,7 @@
                     snackbarNotification('Update Upload Complete, beginning installation', 'downloadCompleted.svg');
                     installUpdate();
                 } else {
-                    snackbarNotification('Error while uploading the Update', 'downloadError.svg');
+                    snackbarNotification('Error while uploading the Update', 'hexError.svg');
                 }
             },
             error: function () {
