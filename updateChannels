@@ -40,5 +40,19 @@
         "codeName": "Uni is coming and I can't stop it...",
         "changelog": "\n- Fixed `Server File Finder` Vulnerability\n- Fixed Critical problem on flashing `Custom Updates`\n- Style of `iconStyle` Buttons updated\n- Improved `Music Player` with new feature and style\n- Better handling of `CSS` and `JS` file update\n- New version of the `Update` Section, you can now choose which `Release Channel` you want to update\n- You can now safely reset the Database if something goes wrong\n- `Copy-Paste` and `Move` features of the `Personal Vault` now working",
         "published": true
+    },
+    "6": {
+        "version": "1.0.0",
+        "channel": "STABLE",
+        "codeName": "The time has come...",
+        "changelog": "\n- First part of the `STABLE` Release!\n- Download and View file method completely re-organized\n- You can now `Share` in a safe way files in you `Personal Vault` without exposing it completely!\n- File are now displayed in a completely different way to protect the Server!\n- FINALLY fixed the `ERR_CACHE_MISS`!\n- Fixed some Visual Bugs\n- Progress are now shown when Uploading a File\n- File and Folder Size are now shown\n- `Personal Vault` Size is now shown in the `Account Page`\n- `IMPORTANT`: A regeneration of the `Userpath` is reccomended!",
+        "published": true
+    },
+    "7": {
+        "version": "1.1.0",
+        "channel": "STABLE",
+        "codeName": "TBD",
+        "changelog": null,
+        "published": false
     }
 }
