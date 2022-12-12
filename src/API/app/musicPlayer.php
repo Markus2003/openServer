@@ -41,6 +41,7 @@
         var files = [ <?php $rawFolder = scandir( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) ); foreach ( $rawFolder as $chunk ) if ( is_file( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) . $chunk ) and isReadableForServer( $chunk ) == "Audio" ) echo "'" . addslashes( $chunk ) . "', "; ?> ];
         var mainPath = '<?php echo str_replace( $_GET["fileName"], '', $_GET["path"] ) ?>';
         $('#musicTitle').html( removeExtensionFromFile('<?php echo $_GET["fileName"] ?>') );
+        $('title').html( removeExtensionFromFile('<?php echo $_GET["fileName"] ?>') + ' | openServer'  );
     </script>
     <script src='/src/API/musicPlayerControls.js'></script>
 

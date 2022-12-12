@@ -109,6 +109,7 @@
             ?>
             <p><b>Current openServer Version:</b> <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionStatus' ) . '-' . file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/version' ) ?></p>
             <p><b>Codename:</b> <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionName' ) ?></p>
+            <p><b>Space Used by openServer:</b> <?php echo formatSize( foldersize( $_SERVER["DOCUMENT_ROOT"] . '/' ) ) ?></p>
         </div>
         <div id='newUpdateChangelog' style='display: none'>
             <b><p id='title'>Loading...</p></b>
@@ -247,6 +248,40 @@
         });
     })
 
+    function isChannelEligible ( choosenChannel, checkChannel ) {
+        switch ( choosenChannel ) {
+            case 'STABLE':
+                switch ( checkChannel ) {
+                    case 'STABLE':
+                        return true
+                    break;
+
+                    default:
+                        return false
+                }
+            break;
+
+            case 'BETA':
+                switch ( checkChannel ) {
+                    case 'STABLE':
+                    case 'BETA':
+                        return true
+                    break;
+
+                    default:
+                        return false
+                }
+            break;
+
+            case 'ALPHA':
+                return true
+            break;
+
+            default:
+                return false
+        }
+    }
+
     function checkUpdateAvailability () {
         $('#updateIconStatus').attr('src', '/src/icons/loading.svg');
         var updateChannels = "";
@@ -301,7 +336,7 @@
             processData: false
         });
         for ( var i = Object.keys( updateChannels ).length - 1; i >= 0; i-- ) {
-            if ( updateChannels[i].channel == rollingChannel.currentChannel )
+            if ( isChannelEligible( rollingChannel.current, updateChannels[i].channel ) )
                 if ( compare( actualVersion, updateChannels[i].version ) == -1 && updateChannels[i].published ) {
                     $('#checkUpdate').html('Download Update');
                     snackbarNotification('New Update Available!', 'updateReadyToDownload.svg');
