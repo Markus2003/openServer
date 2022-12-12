@@ -27,7 +27,7 @@
                         <form id='uploadFile' class='uploadForm' method='post' enctype='multipart/form-data'>
                             <input type='hidden' id='sourcePath' name='path' value='<?php echo $_GET["path"] ?>' />
                             <input type='file' name='file[]' id='file' class='button primaryColor-Dark shadow' multiple required />
-                            <input type='submit' id='submit' class='button primaryColor-Dark shadow' value='Upload' />
+                            <input type='submit' id='submit' class='button primaryColor-Dark shadow' value='Upload a total of 0 Bytes' />
                         </form>
                     </section>
                     <section class='max-width'>
@@ -64,6 +64,30 @@
             $('#' + currentUploadStatus).css('display', 'block');
             if ( currentUploadStatus >= 1 )
                 $('#continue').css('display', 'none');
+        });
+
+        function formatSize ( $bytes ) {
+            if ( $bytes >= 1073741824 ) {
+                return number_format($bytes / 1073741824, 2) + ' GB';
+            } else if ( $bytes >= 1048576 ) {
+                return number_format($bytes / 1048576, 2) + ' MB';
+            } else if ( $bytes >= 1024 ) {
+                return number_format($bytes / 1024, 2) + ' KB';
+            } else if ( $bytes > 1 ) {
+                return $bytes + ' Bytes';
+            } else if ( $bytes == 1 ) {
+                return $bytes + ' Byte';
+            } else {
+                return '0 Bytes';
+            }
+        }
+
+        $('#file').change(function () {
+            totalSize = 0;
+            for ( var i = 0; i < document.getElementById('file').files.length; i++ ) {
+                totalSize += document.getElementById('file').files[i].size;
+            }
+            $('#submit').val("Upload a total of " + formatSize( totalSize ));
         });
     </script>
 

@@ -1,6 +1,31 @@
 /* https://codepen.io/aravi-pen/pen/OxPaVb */
 var player1,onplayhead,playerId,timeline,playhead,timelineWidth;
 
+$('#repeat').click(function () {
+    switch ( $(this).attr('repeatStatus') ) {
+        case 'off':
+            $(this).attr('repeatStatus', 'playlist');
+        break;
+
+        case 'playlist':
+            $(this).attr('repeatStatus', 'song');
+        break;
+
+        case 'song':
+            $(this).attr('repeatStatus', 'off');
+        break;
+    }
+    $(this).children('img').attr('src', '/src/icons/repeat_' + $(this).attr('repeatStatus') + '.svg' );
+});
+
+function getRepeatStatus () {
+    return $('#repeat').attr('repeatStatus');
+}
+
+function getShuffleStatus () {
+    return $('#shuffle').attr('shuffleStatus');
+}
+
 function updatePlaylist () {
     $('.playlistItem.playing').removeClass('playing');
     $('.playlistItem').each(function () {
@@ -52,6 +77,7 @@ updatePlaylist();
 
 $('.playlistItem').click(function () {
     if ( $('#sourcePath').attr('currentFile') != $(this).attr('filename') ) {
+        $('title').html( removeExtensionFromFile( $(this).attr('filename') ) + ' | openServer' );
         $('#musicTitle').html( removeExtensionFromFile( $(this).attr('filename') ) );
         $('#sourcePath').attr('src', mainPath + $(this).attr('filename'));
         $('#quickDownload').attr('href', mainPath + $(this).attr('filename'));
@@ -68,6 +94,7 @@ $('.playlistItem').click(function () {
 $('#previous').click(function () {
     if ( $('#currentTime').html() < '00:03' )
         if ( files.indexOf( $('#sourcePath').attr('currentFile') ) > 0 ) {
+            $('title').html( removeExtensionFromFile( $(this).attr('filename') ) + ' | openServer' );
             $('#musicTitle').html( removeExtensionFromFile( files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ] ) );
             $('#sourcePath').attr('src', mainPath + files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ]);
             $('#quickDownload').attr('href', mainPath + files[ files.indexOf( $('#sourcePath').attr('currentFile') ) - 1 ]);
@@ -130,12 +157,14 @@ function initProgressBar () {
 
             player1.pause();
             isPlaying = false;
+            $('#playPause').removeClass('playing');
             $("#playPause > img").attr("src", "/src/icons/play.svg");
 
         } else {
 
             player1.play();
             isPlaying = true;
+            $('#playPause').addClass('playing');
             $("#playPause > img").attr("src", "/src/icons/pause.svg");
 
         }
@@ -281,6 +310,15 @@ function timeUpdate () {
     // If song is over
     if (player.currentTime == player.duration) {
         player.pause();
+        switch ( getRepeatStatus() ) {
+            case 'playlist':
+                console.log('NEXT SONG!!!')
+            break;
+
+            case 'song':
+                console.log('AGAIN AGAIN AGAAAAAAIIIIIINNNN')
+            break;
+        }
     }
 
 }
