@@ -145,11 +145,23 @@ $('form#uploadPackage').submit(function (e) {
 
 $('form#uploadFile').submit(function (e) {
     e.preventDefault();
-    $('#uploadFile').after('<div id=\'uploadStatus\' class=\'uploader\'><img src=\'/src/icons/loadingMini.svg\' />Uploading File...</div>')
+    $('#uploadFile').after('<div id=\'uploadStatus\' class=\'uploader\'><img src=\'/src/icons/loading.svg\' width=\'24px\' height=\'24px\' />Uploading File...</div>')
     var formData = new FormData(this);
-    $('#file').attr('disabled', 'disabled');
-    $('#submit').attr('disabled', 'disabled');
+    $('#file').attr('disabled', true);
+    $('#submit').attr('disabled', true);
     $.ajax({
+        xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+            xhr.upload.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    percentComplete = parseInt(percentComplete * 100);
+                    $('#submit').val('Upload at ' + percentComplete + '%');
+                }
+            }, false);
+
+            return xhr;
+        },
         url: '/src/API/uploadFile.php',
         type: 'POST',
         data: formData,
@@ -248,4 +260,37 @@ function getTVSeriesName ( rawName ) {
     rawName = removeExtensionFromFile( rawName );
     result = rawName.split(' - ');
     return result[0];
+}
+
+function number_format (number, decimals, dec_point, thousands_sep) {
+    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        s = '',
+        toFixedFix = function (n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+        };
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+}
+
+function snackbarNotification (text, img='') {
+    if (img!='')
+        img = '/src/icons/' + img;
+    $('#snackbar').empty();
+    $('#snackbar').prepend('<span><img src=\'' + img + '\' />' + text + '</span>');
+    $('#snackbar').toggleClass('show');
+    setTimeout(function () {
+        $('#snackbar').toggleClass('show');
+    }, 3000);
 }

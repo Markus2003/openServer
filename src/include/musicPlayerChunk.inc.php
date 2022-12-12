@@ -14,7 +14,7 @@
                 <button id='previous' class='button iconStyle primaryColor-Dark shadow'><img src='/src/icons/skip_previous.svg'></button>
                 <button id='playPause' class='button iconStyle primaryColor-Dark shadow'><img src='/src/icons/play.svg'></button>
                 <button id='next' class='button iconStyle primaryColor-Dark shadow'><img src='/src/icons/skip_next.svg'></button>
-                <button id='repeat' class='button iconStyle primaryColor-Dark shadow' repeatStatus='off' disable><img src='/src/icons/repeat_off.svg'></button>
+                <button id='repeat' class='button iconStyle primaryColor-Dark shadow' repeatStatus='off'><img src='/src/icons/repeat_off.svg'></button>
             </div>
             <audio id='musicPlayer' class='right' controls preload='auto'>
                 <source id='sourcePath' src='<?php echo $_GET["path"] ?>' currentFile='<?php echo $_GET["fileName"] ?>' />

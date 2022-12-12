@@ -496,6 +496,10 @@ fieldset.search > div {
     padding: 10px;
 }
 
+#playerControls > .button.playing {
+    border-radius: 15px;
+}
+
 #musicPlayerContainer > #musicPlayer {
     width: 240px;
 }
@@ -554,8 +558,37 @@ fieldset.search > div {
     margin-top: unset !important;
 }
 
+#dialog {
+    background-color: var( --primaryColor );
+    color: white;
+    border-color: var( --primaryColor-Dark );
+    border-radius: var( --m3-element-borderRadius-min );
+    min-width: 360px;
+}
+
+#dialog > form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+#dialog > form > .bottom {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.chunk-size {
+    opacity: 0;
+    transition: var( --m3-element-transition );
+}
+
+section.primaryColor:hover > .chunk-size {
+    opacity: 1;
+}
+
 #fsOps {
-    display: hidden;
+    display: none;
 }
 
 #fsOps.show {
@@ -570,6 +603,7 @@ fieldset.search > div {
     right: 30px;
     background-color: var( --hoverColor );
     border-radius: var( --m3-element-borderRadius-min );
+    animation: fadein-fsOps 0.5s;
 }
 
 #fsOps > div {
@@ -604,6 +638,59 @@ footer code {
     font-size: 13px;
 }
 
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: var( --hoverColor );
+    color: white;
+    text-align: center;
+    border-radius: var( --m3-element-borderRadius-min );
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 35px;
+    bottom: 10px;
+    font-size: 17px;
+}
+
+#snackbar.show {
+    visibility: visible;
+    animation: fadein-snack 0.5s, fadeout-snack 0.5s 2.5s;
+}
+
+#snackbar > span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    user-select: none;
+}
+
+#snackbar > span > img {
+    aspect-ratio: 1 / 1;
+    width: 24px;
+    height: auto;
+    margin-right: 10px;
+}
+
+::-webkit-scrollbar, ::-webkit-scrollbar-track {
+    display: none;
+}
+
+@keyframes fadein-fsOps {
+    from {bottom: 10px; right: 0px; opacity: 0;}
+    to {bottom: 10px; right: 30px; opacity: 1;}
+}
+
+@keyframes fadein-snack {
+    from {bottom: 10px; left: 0px; opacity: 0;}
+    to {bottom: 10px; left: 30px; opacity: 1;}
+}
+
+@keyframes fadeout-snack {
+    from {bottom: 10px; left: 30px; opacity: 1;}
+    to {bottom: 10px; left: 0px; opacity: 0;}
+}
+
 @media screen and ( max-height: 450px ) {
 
     .sideNavbar {
@@ -628,5 +715,32 @@ footer code {
 
     #playerAndPlaylist {
         flex-direction: column;
+    }
+
+    #snackbar {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -135px;
+        background-color: var( --hoverColor );
+        color: white;
+        text-align: center;
+        border-radius: var( --m3-element-borderRadius-min );
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        top: 90px;
+        bottom: unset;
+        font-size: 17px;
+    }
+
+    @keyframes fadein-snack {
+        from {top: 0px; left: 50%; opacity: 0;}
+        to {top: 90px; left: 50%; opacity: 1;}
+    }
+    
+    @keyframes fadeout-snack {
+        from {top: 90px; left: 50%; opacity: 1;}
+        to {top: 0px; left: 50%; opacity: 0;}
     }
 }

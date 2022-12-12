@@ -22,7 +22,7 @@
                 if ( !$result ) {
                     $database->close();
                     include $_SERVER["DOCUMENT_ROOT"] . '/src/include/fab.html.php';
-                } else if ( $result->num_rows != count( $instructions["instructions"] ) ) {
+                } else if ( $result->num_rows != $instructions["queryResultCheck"] ) {
                     $database->close();
                     include $_SERVER["DOCUMENT_ROOT"] . '/src/include/fab.html.php';
                 }

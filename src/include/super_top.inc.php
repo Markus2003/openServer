@@ -1,2 +1,2 @@
 <html lang='en'>
-    <?php session_start(); include $_SERVER["DOCUMENT_ROOT"] . '/src/API/updateSession.php'; include $_SERVER["DOCUMENT_ROOT"] . '/src/include/custom_functions.inc.php'; ?>
+    <?php session_cache_limiter('private, must-revalidate'); session_cache_expire(60); session_start(); include $_SERVER["DOCUMENT_ROOT"] . '/src/API/updateSession.php'; include $_SERVER["DOCUMENT_ROOT"] . '/src/include/custom_functions.inc.php'; ?>

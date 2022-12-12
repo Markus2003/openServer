@@ -174,6 +174,15 @@
         }
     }
 
+    function foldersize ( $path ) {
+        $bytestotal = 0;
+        $path = realpath( $path );
+        if ( $path!==false && $path!='' && file_exists( $path ) )
+            foreach ( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $path, FilesystemIterator::SKIP_DOTS ) ) as $object )
+                $bytestotal += $object->getSize();
+        return $bytestotal;
+    }
+
     function rrmdir($dir) {
         if (is_dir($dir)) {
             $objects = scandir($dir);
@@ -185,6 +194,43 @@
             reset($objects);
             rmdir($dir);
         }
+    }
+
+    function checkIfShared ( $pathToShare, $fileShared ) {
+        $pathToShare = str_replace( explode( '/', $pathToShare )[0], '', $pathToShare );
+        include $_SERVER["DOCUMENT_ROOT"] . '/src/include/db_connect-Reader.inc.php';
+        $result = $database->query("SELECT * FROM " . $credentials["defaultDatabase"] . ".shareRegister WHERE email='" . $_SESSION["openServerEmail"] . "' AND pathToShare='" . $pathToShare . "' AND fileShared='" . $fileShared . "';");
+        $database->close();
+        if ( $result->num_rows == 0 ) return false; else return true;
+    }
+
+    function generateUIID () {
+        $numbers = '0123456789';
+        $characters = 'abcdef';
+        $numbersLength = strlen( $numbers );
+        $charactersLength = strlen( $characters );
+        $randomString = '';
+        include $_SERVER["DOCUMENT_ROOT"] . '/src/include/db_connect-Reader.inc.php';
+        do {
+            $randomString = '';
+            for ( $i = 0; $i < 8; $i++ )
+                $randomString .= $numbers[ rand( 0, $numbersLength - 1 ) ];
+            $randomString .= '-';
+            for ( $i = 0; $i < 4; $i++ )
+                $randomString .= $numbers[ rand( 0, $numbersLength - 1 ) ];
+            $randomString .= '-';
+            for ( $o = 0; $o < 2; $o++ ) {
+                $randomString .= $characters[ rand( 0, $charactersLength - 1 ) ];
+                for ( $i = 0; $i < 3; $i++ )
+                    $randomString .= $numbers[ rand( 0, $numbersLength - 1 ) ];
+                $randomString .= '-';
+            }
+            $randomString .= $characters[ rand( 0, $charactersLength - 1 ) ];
+            for ( $i = 0; $i < 11; $i++ )
+                $randomString .= $numbers[ rand( 0, $numbersLength - 1 ) ];
+        } while ( $database->query("SELECT * FROM " . $credentials["defaultDatabase"] . ".shareRegister WHERE shareUUID='" . $randomString . "';")->num_rows != 0 );
+        $database->close();
+        return $randomString;
     }
 
 ?>

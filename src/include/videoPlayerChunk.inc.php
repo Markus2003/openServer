@@ -5,7 +5,6 @@
     </p>
 </td>
 <td style='width: fit-content'>
-    <!--<video id='videoPlayer' class="video-js vjs-default-skin right" controls preload='auto' data-setup='{ "techOrder": ["vhs"] }'>-->
     <video id='videoPlayer' class="right" controls preload='auto' >
         <source id='sourcePath' src='<?php echo $_GET["path"] ?>' currentFile='<?php echo $_GET["fileName"] ?>' type='video/mp4' />
     </video>
