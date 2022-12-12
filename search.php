@@ -189,7 +189,7 @@
 
                                 case 'Personal Vault':
                                     echo "
-                                        <form action='/" . $section . "' method='GET'>
+                                        <form action='/" . $section . "' method='POST'>
                                             <input type='hidden' name='overrideFolder' value='" . $overrideFolder . "' />
                                             <button type='submit' class='button right shadow primaryColor-Dark'><img src='/src/icons/folder.svg' /></button>
                                         </form>

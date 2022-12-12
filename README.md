@@ -66,7 +66,7 @@ cd /var/www/html/ && rm ./*
 ```
 - Download `openServer` and extract it:
 ```bash
-wget https://github.com/Markus2003/openServer/releases/download/0.5.9/0.5.9.zip && unzip 0.5.9.zip && rm 0.5.9.zip
+wget https://github.com/Markus2003/openServer/releases/download/1.0.0/1.0.0.zip && unzip 1.0.0.zip && rm 1.0.0.zip
 ```
 - Edit your `php.ini` to grant app upload (`php.ini` path may change depending on the system):
 ```bash
@@ -101,17 +101,19 @@ sudo chown <username>:<username> -R /var/www/html
 <br><br>
 
 # Changelog
-Here we are with the `Uni is coming and I can't stop it...` version (formally `BETA-0.5.9`)<br>
+Here we are with the `The time has come...` version (formally `STABLE-1.0.0`)<br>
 ## Features
 
-- Fixed `Server File Finder` Vulnerability
-- Fixed Critical problem on flashing `Custom Updates`
-- Style of `iconStyle` Buttons updated
-- Improved `Music Player` with new feature and style
-- Better handling of `CSS` and `JS` file update
-- New version of the `Update` Section, you can now choose which `Release Channel` you want to update
-- You can now safely reset the Database if something goes wrong
-- `Copy-Paste` and `Move` features of the `Personal Vault` now working
+- First part of the `STABLE` Release!
+- Download and View file method completely re-organized
+- You can now `Share` in a safe way files in you `Personal Vault` without exposing it completely!
+- File are now displayed in a completely different way to protect the Server!
+- FINALLY fixed the `ERR_CACHE_MISS`!
+- Fixed some Visual Bugs
+- Progress are now shown when Uploading a File
+- File and Folder Size are now shown
+- `Personal Vault` Size is now shown in the `Account Page`
+- `IMPORTANT`: A regeneration of the `Userpath` is reccomended!
 
 
 ## Some Bugs

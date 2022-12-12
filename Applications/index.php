@@ -37,9 +37,9 @@
                                         ";
                                     
                                     echo "<article class='max-width'>
-                                        <a href='" . $app . "/' target='_blank' class='right'><button type='button' class='button primaryColor-Dark shadow'><img src='/src/icons/launch.svg' /></button></a>
-                                        <button type='button' class='button primaryColor-Dark right shadow' onclick='downloadApp(\"" . $app . "\")'><img src='/src/icons/archive.svg' /></button>
-                                        <button type='button' class='button primaryColor-Dark right shadow' onclick='uninstallApp(\"" . $app . "\")'><img src='/src/icons/bin.svg' /></button>
+                                        <a href=\"" . addslashes( $app ) . "/\" target='_blank' class='right'><button type='button' class='button primaryColor-Dark shadow'><img src='/src/icons/launch.svg' /></button></a>
+                                        <button type='button' class='button primaryColor-Dark right shadow' onclick=\"downloadApp('" . addslashes( $app ) . "')\"><img src='/src/icons/archive.svg' /></button>
+                                        <button type='button' class='button primaryColor-Dark right shadow' onclick=\"uninstallApp('" . addslashes( $app ) . "')\"><img src='/src/icons/bin.svg' /></button>
                                     </article>
                                 </section>
                             ";
