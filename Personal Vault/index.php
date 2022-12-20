@@ -92,7 +92,7 @@
                                 <span class='max-width left sectionTitle' style='font-size: 30px'>
                                     <img src='/src/icons/folder.svg' style='width: 30px' />" . $folder . "
                                 </span>
-                                <span class='max-width left chunk-size'>" . formatSize( foldersize( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $overrideFolder . $folder . '/' ) ) . "</span>
+                                <span class='max-width left chunk-size'><button type='button' class='button primaryColor withIMG getFolderSize' location=\"/Personal Vault/". $overrideFolder . $folder . "\"><img src='/src/icons/error.svg' />Get Folder Size</button></span>
                                 <article class='max-width'>
                                     <form action='" . $_SERVER["PHP_SELF"] . "' method='POST'>
                                         <input type='hidden' name='overrideFolder' value='" . $_POST["overrideFolder"] . $folder . "/' />
@@ -156,7 +156,7 @@
                                 }                                
                                 echo "' style='aspect-ratio: 1 / 1; width: 30px; height: auto;' />" . $file . "
                                 </span>
-                                <span class='max-width left chunk-size'>" . formatSize( filesize( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $overrideFolder . $file ) ) . "</span>
+                                <span class='max-width left chunk-size'><button type='button' class='button primaryColor withIMG getFileSize' location=\"/Personal Vault/". $overrideFolder . $file . "\"><img src='/src/icons/error.svg' />Get File Size</button></span>
                                 <article class='max-width'>";
                                     switch ( isReadableForServer( $file ) ) {
                                         case "Video":
@@ -177,14 +177,19 @@
                                     }
                                     echo "<a href=\"/src/API/download.php?type=VAULT&path=" . addslashes( str_replace( explode( '/', $overrideFolder )[0], '', $overrideFolder ) ) . "&filename=" . addslashes( $file ) . "\" download><button type='button' class='button primaryColor-Dark right shadow'><img src='/src/icons/download.svg' /></button></a>";
                                     echo "<button type='button' class='button primaryColor-Dark right shadow' onclick='rename( \"" . getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . "\", \"" . $file . "\" )'><img src='/src/icons/edit.svg' /></button>";
-                                    if ( findStringInArray( $_SESSION["openServerFileHolding"], getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file ) and $_SESSION["openServerFileHoldingType"] == "COPY" ) {
-                                        echo "<button type='button' class='button primaryColor-Dark right shadow copy' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "' disabled><img src='/src/icons/copy.svg' /></button>";
+                                    if ( isset( $_SESSION["openServerFileHoldingType"] ) ) {
+                                        if ( findStringInArray( $_SESSION["openServerFileHolding"], getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file ) and $_SESSION["openServerFileHoldingType"] == "COPY" ) {
+                                            echo "<button type='button' class='button primaryColor-Dark right shadow copy' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "' disabled><img src='/src/icons/copy.svg' /></button>";
+                                        } else {
+                                            echo "<button type='button' class='button primaryColor-Dark right shadow copy' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "'><img src='/src/icons/copy.svg' /></button>";
+                                        }
+                                        if ( findStringInArray( $_SESSION["openServerFileHolding"], getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file ) and $_SESSION["openServerFileHoldingType"] == "MOVE" ) {
+                                            echo "<button type='button' class='button primaryColor-Dark right shadow move' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "' disabled><img src='/src/icons/cut.svg' /></button>";
+                                        } else {
+                                            echo "<button type='button' class='button primaryColor-Dark right shadow move' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "'><img src='/src/icons/cut.svg' /></button>";
+                                        }
                                     } else {
                                         echo "<button type='button' class='button primaryColor-Dark right shadow copy' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "'><img src='/src/icons/copy.svg' /></button>";
-                                    }
-                                    if ( findStringInArray( $_SESSION["openServerFileHolding"], getInServerAddress( $_SERVER["PHP_SELF"] ) . $overrideFolder . $file ) and $_SESSION["openServerFileHoldingType"] == "MOVE" ) {
-                                        echo "<button type='button' class='button primaryColor-Dark right shadow move' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "' disabled><img src='/src/icons/cut.svg' /></button>";
-                                    } else {
                                         echo "<button type='button' class='button primaryColor-Dark right shadow move' path='" . getInServerAddress( $_SERVER["PHP_SELF"] ) .  $overrideFolder . $file . "'><img src='/src/icons/cut.svg' /></button>";
                                     }
                                     if ( checkIfShared( $overrideFolder, $file ) ) {

@@ -66,7 +66,7 @@ cd /var/www/html/ && rm ./*
 ```
 - Download `openServer` and extract it:
 ```bash
-wget https://github.com/Markus2003/openServer/releases/download/1.0.0/1.0.0.zip && unzip 1.0.0.zip && rm 1.0.0.zip
+wget https://github.com/Markus2003/openServer/releases/download/1.0.1/1.0.1.zip && unzip 1.0.1.zip && rm 1.0.1.zip
 ```
 - Edit your `php.ini` to grant app upload (`php.ini` path may change depending on the system):
 ```bash
@@ -101,19 +101,13 @@ sudo chown <username>:<username> -R /var/www/html
 <br><br>
 
 # Changelog
-Here we are with the `The time has come...` version (formally `STABLE-1.0.0`)<br>
+Here we are with the `A little Patch...` version (formally `STABLE-1.0.1`)<br>
 ## Features
 
-- First part of the `STABLE` Release!
-- Download and View file method completely re-organized
-- You can now `Share` in a safe way files in you `Personal Vault` without exposing it completely!
-- File are now displayed in a completely different way to protect the Server!
-- FINALLY fixed the `ERR_CACHE_MISS`!
-- Fixed some Visual Bugs
-- Progress are now shown when Uploading a File
-- File and Folder Size are now shown
-- `Personal Vault` Size is now shown in the `Account Page`
-- `IMPORTANT`: A regeneration of the `Userpath` is reccomended!
+- Patch for Version `1.0.0`
+- `Share` in Personal Vault is now working...
+- Now to display the `Folder`/`File` Size you must click a button that replace the past label (this will speed-up things on less powerfull systems...)
+- `Personal Vault Size` (in the `Account Page`) and `Space Used by openServer` (in `Server Updater`) is now calculated asynchronously
 
 
 ## Some Bugs

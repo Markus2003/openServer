@@ -31,7 +31,7 @@
                             <td>Userpath</td><td><button type='button' id='revealUserpath' class='button primaryColor shadow' style='margin-bottom: 10px'>Show my Userpath</button><button type='button' id='regenerateUserpath' class='button primaryColor shadow'>Regenerate my Userpath</button></td>
                         </tr>
                         <tr>
-                            <td>Personal Vault Size</td><td><b><?php echo formatSize( foldersize( $_SERVER["DOCUMENT_ROOT"] . '/Personal Vault/' . $_SESSION["openServerUserpath"] . '/' ) ) ?></b></td>
+                            <td>Personal Vault Size</td><td><b><label id='diskUsage'><img src='/src/icons/loading.svg' width='24px' /> Calculating...</label></b></td>
                         </tr>
                     </table>
                 </section>
@@ -141,6 +141,24 @@
 
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/script.html.php' ?>
     <script>
+        calculateDiskUsage();
+
+        function calculateDiskUsage () {
+            $.ajax({
+                url: '/src/API/getSize.php?type=folder&location=/Personal Vault/<?php echo $_SESSION["openServerUserpath"] ?>/',
+                type: 'GET',
+                success: function (data) {
+                    $('#diskUsage').html("<img src='/src/icons/spaceUsage.svg' width='24px' /> " + data);;
+                },
+                error: function () {
+                    $('#diskUsage').html("<img src='/src/icons/error.svg' width='24px' /> Error");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        }
+
         $('#revealUserpath').on('click', function () {
             if ( confirm('Do you really want to reveal your \'Userpath\'?\nThis string say where is your Personal Vault on the Server, keep it secret!') ) {
                 var password = prompt('Insert your password to confirm this critical action:');
