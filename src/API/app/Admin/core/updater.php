@@ -357,7 +357,7 @@
             processData: false
         });
         for ( var i = Object.keys( updateChannels ).length - 1; i >= 0; i-- ) {
-            if ( isChannelEligible( rollingChannel.current, updateChannels[i].channel ) )
+            if ( isChannelEligible( rollingChannel.currentChannel, updateChannels[i].channel ) )
                 if ( compare( actualVersion, updateChannels[i].version ) == -1 && updateChannels[i].published ) {
                     $('#checkUpdate').html('Download Update');
                     snackbarNotification('New Update Available!', 'updateReadyToDownload.svg');
