@@ -53,7 +53,7 @@
         "channel": "STABLE",
         "codeName": "A little Patch...",
         "changelog": "\n- Patch for Version `1.0.0`\n- `Share` in Personal Vault is now working...\n- Now to display the `Folder`/`File` Size you must click a button that replace the past label (this will speed-up things on less powerfull systems...)\n- `Personal Vault Size` (in the `Account Page`) and `Space Used by openServer` (in `Server Updater`) is now calculated asynchronously",
-        "published": false
+        "published": true
     },
     "8": {
         "version": "1.1.0",
