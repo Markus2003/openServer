@@ -5,7 +5,7 @@
     ],
     "instructions": [
         "CREATE TABLE `users` ( `email` varchar(320) NOT NULL, `password` varchar(255) NOT NULL, `username` varchar(30) NOT NULL, `userpath` varchar(15) NOT NULL, `flags` tinyint(1) NOT NULL DEFAULT 0 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
-        "CREATE TABLE `shareRegister` ( `shareUUID` varchar(15) NOT NULL, `email` varchar(320) NOT NULL, `pathToShare` varchar(255) NOT NULL, `fileShared` varchar(255) NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
+        "CREATE TABLE `shareRegister` ( `shareUUID` varchar(36) NOT NULL, `email` varchar(320) NOT NULL, `pathToShare` varchar(255) NOT NULL, `fileShared` varchar(255) NOT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
         "ALTER TABLE `users` ADD PRIMARY KEY (`email`);",
         "ALTER TABLE `shareRegister` ADD PRIMARY KEY (`shareUUID`), ADD KEY `emailIndex` (`email`);",
         "ALTER TABLE `shareRegister` ADD CONSTRAINT `userLink` FOREIGN KEY (`email`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;"

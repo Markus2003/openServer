@@ -294,3 +294,39 @@ function snackbarNotification (text, img='') {
         $('#snackbar').toggleClass('show');
     }, 3000);
 }
+
+$('.getFolderSize').click(function () {
+    $(this).html("<img src='/src/icons/loading.svg' />Calculating...");
+    object = $(this);
+    $.ajax({
+        url: '/src/API/getSize.php?type=folder&location=' + $(this).attr('location'),
+        type: 'GET',
+        success: function (data) {
+            object.html("<img src='/src/icons/spaceUsage.svg' />" + data);;
+        },
+        error: function () {
+            object.html("<img src='/src/icons/error.svg' />Error");
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
+
+$('.getFileSize').click(function () {
+    $(this).html("<img src='/src/icons/loading.svg' />Calculating...");
+    object = $(this);
+    $.ajax({
+        url: '/src/API/getSize.php?type=file&location=' + $(this).attr('location'),
+        type: 'GET',
+        success: function (data) {
+            object.html("<img src='/src/icons/spaceUsage.svg' />" + data);;
+        },
+        error: function () {
+            object.html("<img src='/src/icons/error.svg' />Error");
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});

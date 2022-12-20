@@ -672,6 +672,10 @@ footer code {
     margin-right: 10px;
 }
 
+#diskUsage > img {
+    vertical-align: middle;
+}
+
 ::-webkit-scrollbar, ::-webkit-scrollbar-track {
     display: none;
 }

@@ -2,7 +2,7 @@
     echo "
         <section class='primaryColor shadow'>
             <span class='max-width left sectionTitle' style='font-size: 30px'><img src='/src/icons/folder.svg' style='width: 30px' /><b>" . $folder . "</b></span>
-            <span class='max-width left chunk-size'>" . formatSize( foldersize( $_SERVER["DOCUMENT_ROOT"] . '/' . str_replace( '%20', ' ', explode( '/', getInServerAddress( $_SERVER["REQUEST_URI"] ) )[1] ) . '/' . $overrideFolder . $folder ) ) . "</span>
+            <span class='max-width left chunk-size'><button type='button' class='button primaryColor withIMG getFolderSize' location=\"/" . str_replace( '%20', ' ', explode( '/', getInServerAddress( $_SERVER["REQUEST_URI"] ) )[1] ) . '/' . $overrideFolder . $folder . "/\"><img src='/src/icons/error.svg' />Get Folder Size</button></span>
             <article class='max-width'>
                 <form action='" . $_SERVER["PHP_SELF"] . "' method='GET'>
                     <input type='hidden' name='overrideFolder' value=\"" . addslashes( $overrideFolder . $folder ) . "/\" />
