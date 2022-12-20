@@ -90,6 +90,10 @@
         text-decoration: underline;
     }
 
+    #diskUsage > img {
+        vertical-align: middle;
+    }
+
     @media screen and ( max-width: 1290px ) {
 
         #updateContainer {
@@ -109,7 +113,7 @@
             ?>
             <p><b>Current openServer Version:</b> <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionStatus' ) . '-' . file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/version' ) ?></p>
             <p><b>Codename:</b> <?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/configs/versionName' ) ?></p>
-            <p><b>Space Used by openServer:</b> <?php echo formatSize( foldersize( $_SERVER["DOCUMENT_ROOT"] . '/' ) ) ?></p>
+            <p><b>Space Used by openServer:</b> <label id='diskUsage'><img src='/src/icons/loading.svg' width='24px' /> Calculating...</label></p>
         </div>
         <div id='newUpdateChangelog' style='display: none'>
             <b><p id='title'>Loading...</p></b>
@@ -158,6 +162,23 @@
     var cloudVersion = "";
 
     $('#currentChangelog > #content').html( marked.parse( '<?php echo file_get_contents( $_SERVER["DOCUMENT_ROOT"] . '/src/res/changelog' ) ?>' ) );
+    calculateDiskUsage();
+
+    function calculateDiskUsage () {
+        $.ajax({
+            url: '/src/API/getSize.php?type=folder&location=/',
+            type: 'GET',
+            success: function (data) {
+                $('#diskUsage').html("<img src='/src/icons/spaceUsage.svg' width='24px' /> " + data);;
+            },
+            error: function () {
+                $('#diskUsage').html("<img src='/src/icons/error.svg' width='24px' /> Error");
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    }
 
     $("#releaseSelect").change(function () {
         var status = $('#updateIconStatus').attr('src');

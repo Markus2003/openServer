@@ -26,7 +26,7 @@
                     <td colspan='2'>
                         <div id='buttonsContainer'>
                             <button type='button' id='previousFile' class='button sensibleActionButton primaryColor-Dark shadow'><img src='/src/icons/back_arrow.svg' />Previous Episode</button>
-                            <a id='quickDownload' href='<?php echo $_GET["path"] ?>' download><button type='button' class='button primaryColor-Dark shadow'><img src='/src/icons/download.svg' />Quick Download</button></a>
+                            <a id='quickDownload' href="<?php echo $_GET["path"] ?>" download><button type='button' class='button primaryColor-Dark shadow'><img src='/src/icons/download.svg' />Quick Download</button></a>
                             <button type='button' id='nextFile' class='button sensibleActionButton primaryColor-Dark shadow'>Next Episode<img src='/src/icons/forward_arrow.svg' /></button>
                         </div>
                     </td>
@@ -40,9 +40,9 @@
     
     <?php include $_SERVER["DOCUMENT_ROOT"] . '/src/include/script.html.php' ?>
     <script>
-        var files = [ <?php $rawFolder = scandir( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) ); foreach ( $rawFolder as $chunk ) if ( is_file( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) . $chunk ) and isReadableForServer( $chunk ) == "Video" ) echo "'" . addslashes( $chunk ) . "', "; ?> ];
+        var files = [ <?php $rawFolder = scandir( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) ); foreach ( $rawFolder as $chunk ) if ( is_file( str_replace( $_GET["fileName"], '', $_SERVER["DOCUMENT_ROOT"] . $_GET["path"] ) . $chunk ) and isReadableForServer( $chunk ) == "Video" ) echo "\"" . $chunk . "\", "; ?> ];
         var mainPath = '<?php echo str_replace( $_GET["fileName"], '', $_GET["path"] ) ?>';
-        $('#videoTitle').html( removeExtensionFromFile('<?php echo $_GET["fileName"] ?>') );
+        $('#videoTitle').html( removeExtensionFromFile("<?php echo $_GET["fileName"] ?>") );
     </script>
     <script src='/src/API/videoPlayerControls.js'></script>
 
