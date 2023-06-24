@@ -54,7 +54,7 @@ If you have installed version `BETA-0.5.6` or newer, you can easily update to th
 ##### For the moment I'm only supporting `Linux`, so if you have `Windows` you must wait (for `macOS` users: leave this Repo, I don't have enough money to buy Apple products)<br>
 - First of all you must run this command to install `apache2` and `PHP`:
 ```bash
-sudo apt-get install apache2 php8.1 -y
+sudo apt-get install apache2 php8.1 mariadb-server php8.1-mbstring php8.1-mysql php8.1-xml php8.1-zip -y
 ```
 - (OPTIONAL) I strongly reccomend to install also `Cockpit` to manage remotely your server:
 ```bash
