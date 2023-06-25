@@ -29,7 +29,7 @@ Well, you are in the right place!
 | Linux   |  ✓  |  ?   |  ✓  |
 <br>
 
-### Client Side
+### Client Side:
 | Browser | Any Platform |
 |---------|--------------|
 | Chrome  |    >=100     |
