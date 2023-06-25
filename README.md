@@ -22,11 +22,20 @@ Well, you are in the right place!
 <br><br>
 
 ## openServer development support
+### Server Side:
 | OS | 64-bit | 32-bit | ARM |
 |----|--------|--------|-----|
 | Windows |  ?  |  ?  |  ?  |
 | Linux   |  ✓  |  ?   |  ✓  |
-| macOS   |  ✗  |  ✗  |  ✗  |
+<br>
+
+### Client Side
+| Browser | Any Platform |
+|---------|--------------|
+| Chrome  |    >=100     |
+| Firefox |    >=100     |
+| Edge    |    >=100     |
+| Opera   |    >=90      |
 
 <br><br>
 
@@ -51,8 +60,8 @@ If you have installed version `BETA-0.5.6` or newer, you can easily update to th
 <br><br>
 
 ## How do I install openServer on my machine?
-##### For the moment I'm only supporting `Linux`, so if you have `Windows` you must wait (for `macOS` users: leave this Repo, I don't have enough money to buy Apple products)<br>
-- First of all you must run this command to install `apache2` and `PHP`:
+##### For the moment I'm only supporting `Linux`, so if you have `Windows` you must wait<br>
+- First of all you must run this command to install `apache2`, `PHP` and the relative modules:
 ```bash
 sudo apt-get install apache2 php8.1 mariadb-server php8.1-mbstring php8.1-mysql php8.1-xml php8.1-zip -y
 ```
